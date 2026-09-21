@@ -13,4 +13,8 @@ Use Unity `6000.0.84f1` or a compatible Unity 6 LTS patch.
 9. Run `Tools > Krishna Game > Validate Project`.
 10. Enter Play Mode, verify success and failure/reset, then test a portrait Android build.
 
+## Immediate playable test
+
+Run `Tools > Krishna Game > Create Playable Greybox Demo`. The tool generates and opens a dependency-free scene with all three Chapter 1 puzzle families. Press Play and follow the instructions at the top of the Game view.
+
 Do not begin mass level production until greybox Levels 1, 6 and 15 have passed on a target phone. Those three scenes cover every Chapter 1 mechanic.

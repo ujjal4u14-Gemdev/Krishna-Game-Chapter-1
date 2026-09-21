@@ -74,6 +74,17 @@ Only the configuration and artwork change.
 
 Build Levels 1, 6 and 15 first. Together they validate every Chapter 1 mechanic. Once their UI, save flow and action sequences work, the remaining 51 levels are primarily data and art authoring.
 
+## Play the included greybox demo
+
+After the first Unity import finishes without compiler errors:
+
+1. Run `Tools > Krishna Game > Create Playable Greybox Demo`.
+2. Unity creates and opens `Assets/_Project/Scenes/Samples/PlayableGreyboxDemo.unity`.
+3. Press Play.
+4. Complete Erase/Reveal, Binary Choice and Aim & Shoot in sequence.
+
+The demo uses generated colored shapes and contains no final copyrighted artwork. It exists to verify the complete input, evaluation, reset, sequencing and completion pipeline before art production.
+
 ## Rights note
 
 The walkthrough is used as a gameplay reference. Use artwork, music, character designs, trademarks and story text only when you own them or have permission. The framework deliberately keeps content separate so licensed or original replacement art can be used without changing puzzle logic.
