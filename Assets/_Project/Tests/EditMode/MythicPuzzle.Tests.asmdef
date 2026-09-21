@@ -1,0 +1,8 @@
+{
+  "name": "MythicPuzzle.Tests",
+  "rootNamespace": "MythicPuzzle.Tests",
+  "references": ["MythicPuzzle.Runtime"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

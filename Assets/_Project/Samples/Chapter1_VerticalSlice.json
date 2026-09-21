@@ -1,0 +1,29 @@
+{
+  "levels": [
+    {
+      "levelId": "chapter01_level001",
+      "puzzleType": "EraseReveal",
+      "correctEntityIds": ["rope_mask"],
+      "requiredProgress": 0.7,
+      "introSequence": "SEQ_L001_Intro",
+      "successSequence": "SEQ_L001_Success",
+      "failureSequence": "SEQ_L001_Failure"
+    },
+    {
+      "levelId": "chapter01_level006",
+      "puzzleType": "BinaryChoice",
+      "correctEntityIds": ["choice_safe_crawl"],
+      "introSequence": "SEQ_L006_Intro",
+      "successSequence": "SEQ_L006_Success",
+      "failureSequence": "SEQ_L006_Failure"
+    },
+    {
+      "levelId": "chapter01_level015",
+      "puzzleType": "AimAndShoot",
+      "correctEntityIds": ["butter_pot_target"],
+      "introSequence": "SEQ_L015_Intro",
+      "successSequence": "SEQ_L015_Success",
+      "failureSequence": "SEQ_L015_Failure"
+    }
+  ]
+}

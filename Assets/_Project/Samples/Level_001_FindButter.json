@@ -1,0 +1,18 @@
+{
+  "levelId": "LVL_C01_001_FindButter",
+  "sceneName": "SCN_C01_VillageCourtyard",
+  "puzzles": [
+    {
+      "puzzleId": "PZ_C01_001_SelectPot",
+      "puzzleType": "TapSelect",
+      "correctEntityIds": ["ENT_ButterPot_Correct"],
+      "maxAttempts": 0,
+      "resetAfterFailure": true,
+      "introSequence": "SEQ_C01_001_Intro",
+      "successSequence": "SEQ_C01_001_Success",
+      "failureSequence": "SEQ_C01_001_Fail"
+    }
+  ],
+  "completionSequence": "SEQ_C01_001_LevelComplete"
+}
+
