@@ -16,7 +16,7 @@ namespace MythicPuzzle.Runtime
 
         public void ReportProgress(float normalizedProgress)
         {
-            inputRouter.RaiseEraseProgress(sceneEntity.EntityId, normalizedProgress);
+            inputRouter?.RaiseEraseProgress(sceneEntity.EntityId, normalizedProgress);
         }
     }
 }

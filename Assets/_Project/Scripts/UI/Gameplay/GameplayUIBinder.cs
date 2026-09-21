@@ -12,18 +12,21 @@ namespace MythicPuzzle.UI
 
         private void OnEnable()
         {
+            if (puzzleDirector == null) return;
             puzzleDirector.StateChanged += OnStateChanged;
             OnStateChanged(puzzleDirector.State);
         }
 
-        private void OnDisable() => puzzleDirector.StateChanged -= OnStateChanged;
+        private void OnDisable()
+        {
+            if (puzzleDirector != null) puzzleDirector.StateChanged -= OnStateChanged;
+        }
 
         private void OnStateChanged(PuzzleState state)
         {
-            interactionRoot.SetActive(state == PuzzleState.AwaitingInput);
-            correctFeedback.SetActive(state == PuzzleState.Success);
-            wrongFeedback.SetActive(state == PuzzleState.Failure);
+            if (interactionRoot != null) interactionRoot.SetActive(state == PuzzleState.AwaitingInput);
+            if (correctFeedback != null) correctFeedback.SetActive(state == PuzzleState.Success);
+            if (wrongFeedback != null) wrongFeedback.SetActive(state == PuzzleState.Failure);
         }
     }
 }
-

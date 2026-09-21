@@ -42,14 +42,19 @@ Upload a ZIP containing `Assets`, `Packages` and `ProjectSettings`. Exclude the 
 
 Adapters keep these outside the puzzle framework.
 
-## First repository milestone
+## Completed framework milestone
 
-1. Confirm Unity editor version and packages.
-2. Add project folder and assembly structure.
-3. Install the runtime puzzle framework.
-4. Add the UI navigation framework.
-5. Add automated evaluator tests.
-6. Build one greybox Tap Select level.
-7. Build one greybox Drag & Drop level.
-8. Verify Android portrait build.
+1. Unity editor version and package manifest are locked.
+2. Runtime, UI, test and editor assemblies are separated.
+3. Chapter 1 evaluators and erase/aim scene controllers are implemented.
+4. UI navigation, safe-area and gameplay binding foundations are included.
+5. Evaluator tests and project validation tooling are included.
+6. Progress persistence and scene loading are included.
 
+## Next content milestone
+
+1. Run `Tools > Krishna Game > Setup Project` after Unity imports the repository.
+2. Greybox Levels 1, 6 and 15 using `Docs/Vertical_Slice_Setup.md`.
+3. Add licensed/original character, environment, UI and audio assets.
+4. Validate on the target Android device, including safe area and memory use.
+5. Use the three approved scenes as templates for the remaining chapter content.

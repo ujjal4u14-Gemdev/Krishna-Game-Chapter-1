@@ -16,17 +16,29 @@ namespace MythicPuzzle.Runtime
         private IPuzzleEvaluator currentEvaluator;
 
         public PuzzleState State { get; private set; }
+        public LevelDefinition Level => level;
+        public int PuzzleIndex => puzzleIndex;
+        public int PuzzleCount => level == null ? 0 : level.Puzzles.Count;
         public event Action<PuzzleState> StateChanged;
         public event Action<int> PuzzleChanged;
+        public event Action<LevelDefinition> LevelCompleted;
+        public event Action<PuzzleDefinition> PuzzleHardFailed;
 
-        private void OnEnable() => inputRouter.SignalRaised += OnSignalRaised;
-        private void OnDisable() => inputRouter.SignalRaised -= OnSignalRaised;
+        private void OnEnable()
+        {
+            if (inputRouter != null) inputRouter.SignalRaised += OnSignalRaised;
+        }
+
+        private void OnDisable()
+        {
+            if (inputRouter != null) inputRouter.SignalRaised -= OnSignalRaised;
+        }
 
         private IEnumerator Start()
         {
-            if (level == null || level.Puzzles.Count == 0)
+            if (level == null || inputRouter == null || sequenceRunner == null || level.Puzzles.Count == 0)
             {
-                Debug.LogError("PuzzleDirector requires a LevelDefinition with at least one puzzle.");
+                Debug.LogError("PuzzleDirector requires a level, input router, sequence runner and at least one puzzle.");
                 yield break;
             }
 
@@ -81,6 +93,7 @@ namespace MythicPuzzle.Runtime
             {
                 yield return sequenceRunner.Run(level.CompletionSequence);
                 SetState(PuzzleState.Complete);
+                LevelCompleted?.Invoke(level);
             }
         }
 
@@ -95,6 +108,7 @@ namespace MythicPuzzle.Runtime
             if (hardFail)
             {
                 SetState(PuzzleState.Complete);
+                PuzzleHardFailed?.Invoke(currentDefinition);
                 yield break;
             }
 
@@ -115,4 +129,3 @@ namespace MythicPuzzle.Runtime
         }
     }
 }
-

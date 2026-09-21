@@ -55,7 +55,10 @@ Only the configuration and artwork change.
   - Aim & Shoot
   - Tap Select, Multi Select, Sequence Order, Drag & Drop and Swipe Direction
 - Data-driven action sequence runner
+- Ready-to-wire tile eraser and trajectory-based aim/shoot controllers
+- JSON progress saving and centralized scene loading
 - Separate reusable UI assembly and navigation foundation
+- Safe-area fitter plus Unity setup and validation menu tools
 - Dedicated UI and code-segmentation documents
 - Sample level JSON and planning CSV
 
@@ -64,7 +67,8 @@ Only the configuration and artwork change.
 1. Install Unity `6000.0.84f1` or a compatible Unity 6000.0 LTS patch.
 2. Clone this repository and open its root in Unity Hub.
 3. Allow Unity Package Manager to restore packages.
-4. Follow `Docs/Vertical_Slice_Setup.md` to create the Bootstrap and first gameplay scene.
+4. Run `Tools > Krishna Game > Setup Project` once scripts compile.
+5. Open the generated GameplayTemplate and follow `Docs/Vertical_Slice_Setup.md` for Levels 1, 6 and 15.
 
 ## Recommended first vertical slice
 

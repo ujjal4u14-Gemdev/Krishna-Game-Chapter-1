@@ -17,36 +17,44 @@ namespace MythicPuzzle.UI
 
         private void OnEnable()
         {
-            puzzleDirector.PuzzleChanged += OnPuzzleChanged;
-            pauseButton.onClick.AddListener(OpenPause);
+            if (puzzleDirector != null)
+            {
+                puzzleDirector.PuzzleChanged += OnPuzzleChanged;
+                Configure(
+                    puzzleDirector.Level == null ? "Level" : $"Level {puzzleDirector.Level.LevelNumber}",
+                    puzzleDirector.PuzzleCount);
+            }
+            if (pauseButton != null) pauseButton.onClick.AddListener(OpenPause);
         }
 
         private void OnDisable()
         {
-            puzzleDirector.PuzzleChanged -= OnPuzzleChanged;
-            pauseButton.onClick.RemoveListener(OpenPause);
+            if (puzzleDirector != null) puzzleDirector.PuzzleChanged -= OnPuzzleChanged;
+            if (pauseButton != null) pauseButton.onClick.RemoveListener(OpenPause);
         }
 
         public void Configure(string levelName, int totalPuzzles)
         {
-            levelLabel.text = levelName;
+            if (levelLabel != null) levelLabel.text = levelName;
             puzzleCount = Mathf.Max(1, totalPuzzles);
             OnPuzzleChanged(0);
         }
 
-        private void OnPuzzleChanged(int index) =>
-            progressLabel.text = $"{index + 1}/{puzzleCount}";
+        private void OnPuzzleChanged(int index)
+        {
+            if (progressLabel != null) progressLabel.text = $"{index + 1}/{puzzleCount}";
+        }
 
         private void OpenPause()
         {
-            pausePanel.Show();
+            pausePanel?.Show();
             Time.timeScale = 0f;
         }
 
         public void Resume()
         {
             Time.timeScale = 1f;
-            pausePanel.Hide();
+            pausePanel?.Hide();
         }
     }
 }

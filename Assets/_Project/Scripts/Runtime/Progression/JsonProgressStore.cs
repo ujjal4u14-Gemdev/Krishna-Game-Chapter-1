@@ -17,7 +17,10 @@ namespace MythicPuzzle.Runtime
                 return JsonUtility.FromJson<PlayerProgressData>(File.ReadAllText(FilePath))
                     ?? new PlayerProgressData();
             }
-            catch (IOException exception)
+            catch (System.Exception exception) when (
+                exception is IOException ||
+                exception is System.UnauthorizedAccessException ||
+                exception is System.ArgumentException)
             {
                 Debug.LogWarning($"Could not load progress: {exception.Message}");
                 return new PlayerProgressData();
@@ -26,11 +29,21 @@ namespace MythicPuzzle.Runtime
 
         public void Save(PlayerProgressData data)
         {
-            var temporaryPath = FilePath + ".tmp";
-            File.WriteAllText(temporaryPath, JsonUtility.ToJson(data, true));
+            try
+            {
+                var temporaryPath = FilePath + ".tmp";
+                File.WriteAllText(temporaryPath, JsonUtility.ToJson(data, true));
 
-            if (File.Exists(FilePath)) File.Delete(FilePath);
-            File.Move(temporaryPath, FilePath);
+                if (File.Exists(FilePath)) File.Delete(FilePath);
+                File.Move(temporaryPath, FilePath);
+            }
+            catch (System.Exception exception) when (
+                exception is IOException ||
+                exception is System.UnauthorizedAccessException ||
+                exception is System.ArgumentException)
+            {
+                Debug.LogWarning($"Could not save progress: {exception.Message}");
+            }
         }
     }
 }

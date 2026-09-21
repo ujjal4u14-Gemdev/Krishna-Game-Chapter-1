@@ -11,9 +11,11 @@ namespace MythicPuzzle.Runtime
 
         private void Awake() => sceneEntity = GetComponent<SceneEntity>();
 
+        public string TargetId => sceneEntity == null ? string.Empty : sceneEntity.EntityId;
+
         public void ResolveHit(Vector2 screenPosition)
         {
-            inputRouter.RaiseProjectileHit(sceneEntity.EntityId, screenPosition);
+            inputRouter?.RaiseProjectileHit(sceneEntity.EntityId, screenPosition);
         }
     }
 }

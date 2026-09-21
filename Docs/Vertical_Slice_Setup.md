@@ -4,36 +4,36 @@ Build Levels 1, 6 and 15 before producing the remaining content. They prove ever
 
 ## Bootstrap scene
 
-Create `Assets/_Project/Scenes/Bootstrap.unity` with one persistent root containing:
+After the first Unity import, run `Tools > Krishna Game > Setup Project`. It creates the standard folders, a Bootstrap scene, a GameplayTemplate scene and their Build Settings entries. The Bootstrap scene contains:
 
-- `SceneRegistry`
-- save/progression service (implementation milestone 2)
-- audio service
-- `UIScreenController`
-- loading canvas
+- `JsonProgressStore`
+- `LevelSceneLoader`
+
+Add the chapter-select UI and audio service when their art/audio assets are available.
 
 ## Gameplay scene template
 
-Create `Assets/_Project/Scenes/Templates/GameplayTemplate.unity` containing:
+The generated `Assets/_Project/Scenes/Templates/GameplayTemplate.unity` contains:
 
 - `PuzzleDirector`
 - `PuzzleInputRouter`
 - `ActionSequenceRunner`
-- gameplay camera and safe-area canvas
-- `GameHUDController`
-- correct/wrong feedback groups
-- separate `Actors`, `Interactive`, `Background`, `Foreground`, `VFX` and `Audio` roots
+- gameplay camera
+- `ChapterProgressService` and `JsonProgressStore`
+- roots ready for scene content and gameplay UI
+
+Add a Canvas with `SafeAreaFitter`, `GameHUDController`, correct/wrong feedback groups, and separate `Actors`, `Interactive`, `Background`, `Foreground`, `VFX` and `Audio` roots for the first vertical slice.
 
 Every runtime target gets a `SceneEntity` with a stable ID. Art objects never call `PuzzleDirector` directly; input adapters raise `PuzzleInputSignal` values through the router.
 
 ## Level 1 — Erase / Reveal
 
-1. Add the visual eraser implementation of your choice.
-2. Put `EraseProgressSource` on the mask and give its `SceneEntity` ID `rope_mask`.
+1. Divide the removable overlay into small sprite tiles with `Collider2D` and `ErasableTile`.
+2. Put `TileEraseController` and `SceneEntity` on the pointer-receiving mask root; set its ID to `rope_mask`.
 3. Configure an `EraseReveal` puzzle with `correctEntityIds = [rope_mask]` and `requiredProgress = 0.7`.
 4. Create shared intro, success and failure sequence assets.
 
-The framework intentionally does not force one masking technology. A shader RenderTexture solution is best for freehand erasing; tiled sprite masks are simpler for low-end devices.
+`TileEraseController` is the included low-cost mobile implementation. A future shader/RenderTexture eraser can report through `EraseProgressSource` without changing puzzle rules.
 
 ## Level 6 — Binary Choice
 
@@ -43,10 +43,10 @@ The framework intentionally does not force one masking technology. A shader Rend
 
 ## Level 15 — Aim & Shoot
 
-1. Add an aim controller that previews a sampled 2D trajectory.
-2. Put `ProjectileTarget` on the correct pot and every hazard/decoy.
+1. Add `AimAndShootController`, assign its launch point, trajectory `LineRenderer`, camera and projectile prefab.
+2. Put `ProjectileTarget`, `SceneEntity` and a `Collider2D` on the correct pot and every hazard/decoy.
 3. Configure `AimAndShoot` with the pot ID in `correctEntityIds`.
-4. On collision, the projectile calls `ProjectileTarget.ResolveHit`.
+4. Give the projectile prefab `Rigidbody2D`, a collider and `PuzzleProjectile`.
 
 Physics, trajectory preview and projectile visuals stay scene-side. The evaluator only judges the resolved target ID, so later projectile levels reuse the same rule code.
 
@@ -61,3 +61,4 @@ For every level create:
 - a thumbnail and localization key set
 - one happy-path test and one failure/reset test in the Unity scene
 
+Before committing a level, run `Tools > Krishna Game > Validate Project`. It checks duplicate/empty IDs, missing puzzle targets, empty levels and open-scene entity IDs.
