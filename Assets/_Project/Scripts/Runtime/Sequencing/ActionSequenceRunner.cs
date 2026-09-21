@@ -4,18 +4,6 @@ using UnityEngine;
 
 namespace MythicPuzzle.Runtime
 {
-    public interface IActorAnimationAdapter
-    {
-        void Play(string animationName);
-        void SetExpression(string expressionName);
-    }
-
-    public abstract class ActorAnimationAdapter : MonoBehaviour, IActorAnimationAdapter
-    {
-        public abstract void Play(string animationName);
-        public abstract void SetExpression(string expressionName);
-    }
-
     public sealed class ActionSequenceRunner : MonoBehaviour
     {
         [SerializeField] private SceneRegistry sceneRegistry;

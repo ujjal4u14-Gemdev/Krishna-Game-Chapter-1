@@ -109,7 +109,7 @@ Core never references UI, a puzzle category, Spine, DOTween, analytics, ads or s
 
 ## Rules for organized code
 
-1. One public type per file.
+1. One primary behavior class per file. Closely coupled enums and serialized value contracts may share a contract file.
 2. File name must match its public type.
 3. Runtime and Editor code stay in separate assemblies.
 4. No singleton access from puzzle evaluators.
