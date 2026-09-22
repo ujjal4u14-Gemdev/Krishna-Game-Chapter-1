@@ -7,14 +7,21 @@ namespace MythicPuzzle.Runtime
     {
         private readonly Dictionary<string, SceneEntity> entities = new();
 
-        private void Awake()
+        private void Awake() => Rebuild();
+
+        public void Rebuild()
         {
             entities.Clear();
-            foreach (var entity in GetComponentsInChildren<SceneEntity>(true))
+            var scene = gameObject.scene;
+            if (!scene.IsValid()) return;
+            foreach (var root in scene.GetRootGameObjects())
             {
-                if (!string.IsNullOrWhiteSpace(entity.EntityId))
+                foreach (var entity in root.GetComponentsInChildren<SceneEntity>(true))
                 {
-                    entities[entity.EntityId] = entity;
+                    if (string.IsNullOrWhiteSpace(entity.EntityId)) continue;
+                    if (entities.ContainsKey(entity.EntityId))
+                        Debug.LogError($"Duplicate scene entity ID: {entity.EntityId}", entity);
+                    else entities.Add(entity.EntityId, entity);
                 }
             }
         }
@@ -23,4 +30,3 @@ namespace MythicPuzzle.Runtime
             entities.TryGetValue(entityId, out entity);
     }
 }
-

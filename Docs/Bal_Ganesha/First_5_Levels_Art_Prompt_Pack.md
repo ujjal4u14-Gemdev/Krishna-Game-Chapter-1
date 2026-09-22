@@ -1,184 +1,122 @@
-# Bal Ganesha — Levels 1–5 Art Prompt Pack
+# Bal Ganesha — Levels 1–5 production art prompts
 
-This pack is the production brief for the first playable slice. The walkthrough video was used only to verify puzzle topology and object placement. All characters, costumes, environments, props, color design and animation must be original.
+These prompts support the playable Unity slice in `FirstFiveLevelsBuilder.cs`. The supplied `Lvl 1-25.mp4` was reviewed for the first five interactions only. It is a mechanical reference, not an art reference: do not reproduce its characters, interface, backgrounds, palette or animation frames. The user-supplied `Ganesha.png` is the canonical character reference.
 
-## Global art direction
+## Locks shared by every prompt
 
-### Master style prompt
+- Original premium 2D children's storybook art for a 1080 × 1920 portrait game; warm Indian palace architecture; soft, readable silhouettes; saffron, terracotta, muted turquoise and marigold accents; upper-left morning light.
+- Preserve the supplied Ganesha's peach-pink skin, **two arms**, curled trunk, two short tusks, red forehead mark, tall ornate gold crown with central red jewel, red-gem gold jewelry, sacred thread, and orange dhoti with yellow trim. No peacock feather, blue skin, third or fourth arm, or alternate costume.
+- Background art contains no characters, targets, rewards, removable covers, colliders, UI or text. Every removed object needs complete repaint beneath it.
+- Sprite prompts produce one isolated object on a truly transparent background with safe padding. Background prompts bleed to all four edges. No text, UI, watermark, fake screenshot, photorealism, weapons, horror or modern objects.
+- Master composition is 2160 × 3840; Unity reference is 1080 × 1920. Keep required interactions within X 90–990 and Y 250–1690 at reference size. Import sprite PNGs with sRGB and alpha on, mipmaps off. Keep layered PSD/KRA masters for final production.
+- The prompt's composition image is a review aid. Export the listed objects as separate PNGs named exactly after the `SpriteArtSlot` IDs below. Do not use a flattened scene image as gameplay art.
 
-> Original premium 2D mobile game illustration for children ages 5–10, joyful Bal Ganesha adventure, warm Indian palace architecture, hand-painted storybook shapes, clean readable silhouettes, soft rounded forms, rich saffron, turquoise, coral and marigold palette, gentle volumetric sunlight, subtle textile and painted-plaster texture, expressive friendly faces, culturally respectful jewelry and clothing, polished casual-game finish, portrait 9:16 composition, large uncluttered gameplay area, layered parallax-ready environment, no text, no UI, no watermark, no photorealism.
+### Canonical character prompt
 
-### Negative prompt
+**Reference image:** `Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Source/Ganesha_Canonical_Reference.png`
 
-> copyrighted game assets, direct screenshot recreation, Krishna character, realistic child anatomy, frightening imagery, sharp weapons, dark horror, busy pattern behind interactive objects, tiny target, hidden collider, text, logo, watermark, frame, UI buttons, fake mobile screenshot, blur, low resolution, extra limbs, malformed hands, modern objects.
+> Use case: identity-preserve. Asset type: transparent 2D game sprite `CHR_Ganesha_Crawl`. Image 1 is the exact canonical Ganesha reference. Repose the same child Ganesha into a low right-facing three-quarter crawl, one hand reaching and one supporting on the floor. Preserve face, eyes, ears, curled trunk, short tusks, red forehead mark, tall ornate gold crown with central red jewel, gold ornaments with red gems, sacred thread, peach-pink skin, orange dhoti and yellow trim. Exactly two arms and two legs. Friendly curious expression, clear mobile-scale silhouette, warm upper-left light, entire body visible, generous transparent padding, bottom-center floor pivot. Original polished 2D storybook rendering. No background, floor, cast shadow, text, UI, watermark, blue skin, peacock feather or extra limbs.
 
-### Technical target
+The first transparent crawl candidate is stored at `Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Crawl.png`. It is a single flat sprite for the playable slice; final animation still needs a reviewed layered turnaround and cutout rig. The Unity scenes share this one sprite and will accept a replacement through the same slot ID.
 
-| Item | Requirement |
-|---|---|
-| Canvas | 1080 × 1920 portrait working composition |
-| Safe gameplay area | X 90–990 px; Y 250–1690 px |
-| Camera | Orthographic-looking 2D, eye level approximately 35% above floor |
-| Character scale | Bal Ganesha occupies 18–24% of canvas height |
-| Interactive silhouette | Minimum 140 px on its shortest important axis |
-| Masters | Layered PSD/KRA; sRGB; transparent padding retained |
-| Unity exports | PNG-24/32, tight but consistent canvas, no baked shadow unless requested |
-| Required groups | `BG_Far`, `BG_Mid`, `Gameplay`, `FG_Near`, `Interactive_*`, `Repaint` |
+### Reusable palace kit prompts
 
-Do not generate the UI inside scene art. Do not flatten removable objects into the background. Each prompt below produces a concept/composition; the artist must rebuild approved output into the named production layers.
+| Unity slot | Prompt | Export |
+|---|---|---|
+| `BG_Far` | Distant Indian-inspired palace architecture and soft sunlit sky, broad low-contrast masses, depth only, no gameplay objects, no text, seamless portrait bleed. | Opaque full-frame PNG |
+| `BG_Mid_Palace` | Warm exterior palace wall for Levels 1–2: simple plaster, distant windows and a few clearly decorative subdued niches; empty left crawl lane and upper-right hanging-object area. No jar, rope, spill or character. | Transparent or full-frame PNG |
+| `BG_Mid_Storeroom` | Warm indoor storeroom wall for Levels 3–5: broad quiet plaster, sparse carved trim and believable room depth; uncluttered middle-right puzzle space. No cupboard, beam, pots, character or removable objects. | Transparent or full-frame PNG |
+| `BG_Floor` | Reusable warm terracotta and sandstone floor plane with subtle large tiles, clean repaint throughout the playable route and landing zones; no spill, shards or reward. | Transparent or full-frame PNG |
+| `ENV_Palace_Arch` | A single restrained carved sandstone arch or beam accent, horizontal, softly lit from upper-left, isolated and transparent; keep it behind interactive objects. | Transparent PNG |
 
-## Shared asset prompts
-
-### Bal Ganesha crawl pose
-
-**Slot:** `CHR_Ganesha_Crawl`
-
-> Full-body transparent-background character sprite of young Bal Ganesha crawling with playful curiosity, facing right in three-quarter side view, childlike proportions, soft coral-pink skin, large friendly elephant ears, small curved trunk, warm golden dhoti, modest gold ornaments, tiny crown with turquoise accent, joyful intelligent eyes, one hand reaching forward, readable silhouette at mobile size, polished hand-painted 2D storybook game art, consistent top-left light, no background, no text, no shadow cut off, no extra limbs.
-
-Required variants: neutral crawl, curious look-up, delighted success, reaching toward modaks. Keep the body registration point and foot/floor line identical.
-
-### Palace modular environment kit
-
-**Slots:** `BG_Far`, `BG_Mid_Palace`, `BG_Floor`, `ENV_Palace_Arch`
-
-> Modular warm palace storeroom environment kit for a portrait 2D children's puzzle game, original Indian-inspired painted plaster, carved sandstone arches, deep wall niches, low terracotta floor, subtle marigold festival details, saffron and muted turquoise palette, soft morning sunlight, broad quiet shapes, empty central gameplay area, separate far wall, mid-wall, floor and foreground modules, no characters, no jars, no text, no UI, seamless edges for reuse across five levels.
+The current builder binds `BG_Mid_Palace` on Levels 1–2 and `BG_Mid_Storeroom` on Levels 3–5. These are kit modules, so the five levels share lighting and scale without reusing one flattened full-screen image.
 
 ## Level 1 — The First Modak Jar
 
-### Gameplay lock
+**Video-verified action:** erase one vertical rope. A suspended jar drops and safely breaks, revealing modaks. Ganesha starts at lower-left; rope and jar are upper-right; the landing space is clear. No decoy target.
 
-- Start: Bal Ganesha crawls at lower-left and looks toward a hanging jar at upper-right.
-- Player action: rub/erase the single vertical rope.
-- Success: rope vanishes, jar falls, breaks safely on the floor and reveals modaks.
-- Decoys/hazards: none. Decorative background pots must not look interactive.
+**Composition review prompt**
 
-### Composition prompt
+> Original portrait 2D Bal Ganesha puzzle composition inside a sunlit palace courtyard entrance. Place the canonical two-armed Ganesha crawling at lower-left, looking toward one large terracotta modak jar suspended at upper-right by one clearly visible vertical rope. Preserve a broad finger-rub lane around the rope and a clear floor landing zone below the jar. Warm sandstone arch, saffron plaster, restrained marigold and turquoise detail; subdued distant decoration. Friendly rounded storybook art, no text or UI. Show the intact setup, then plan complete clean background repaint beneath the rope and jar. Export each gameplay object separately.
 
-> Portrait 9:16 children's mobile puzzle scene inside a sunlit palace courtyard entrance. Young Bal Ganesha crawls at the lower-left, looking up with curiosity. A large terracotta modak jar hangs in the upper-right from one clearly visible vertical rope. Keep a wide clean finger path around the rope. Decorative pots sit softly in distant wall niches and have lower contrast. The landing space below the jar is empty and readable. Warm saffron plaster, carved arch, marigold accents, turquoise details, original hand-painted storybook style, strong depth separation, no text, no UI, no watermark. Deliver background repaint behind the rope and jar.
-
-### Required exports
-
-| Slot / file stem | State | Pivot |
+| Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
-| `BG_C01_001_Palace` | Clean environment with repaint | Center |
-| `CHR_Ganesha_Crawl` | Start pose | Bottom-center |
-| `INT_C01_001_Target` | Full vertical rope only | Top-center |
-| `PROP_Jar_Hanging` | Intact hanging jar | Top-center at rope knot |
-| `PROP_Jar_Falling` | Optional motion pose | Center |
-| `PROP_Jar_Broken` | Safe broken halves | Bottom-center |
-| `PROP_Modaks_Pile` | Reward pile | Bottom-center |
-| `VFX_Rope_Dust` | 6–10 frame dust/thread puff | Center |
-| `VFX_Reward_Glow` | Loopable sparkle | Center |
+| `CHR_Ganesha_Crawl` | Shared canonical crawl sprite above. | Bottom-center |
+| `INT_C01_001_Target` | One long, cleanly readable vertical natural-fiber rope, isolated; no jar or roof beam. | Top-center |
+| `PROP_Jar_Hanging` | One intact rounded terracotta festival jar with simple cream/turquoise painted bands, lid and top suspension loop; no long rope. | Top-center loop |
+| `PROP_Jar_Broken` | Two or three large harmless rounded jar pieces at rest after falling; no sharp shards. | Bottom-center |
+| `PROP_Modaks_Pile` | Small readable pile of golden modaks separate from broken ceramic. | Bottom-center |
+
+Success animation uses the existing jar entity moving downward, then swaps to the separate broken-jar and modak sprites. Rope dust and extra falling frames are later animation additions, not required `LevelArtSet` slots.
 
 ## Level 2 — A Messy Path
 
-### Gameplay lock
+**Video-verified action:** erase one continuous floor obstruction made of a pale food spill and blocking clay pieces. Ganesha crosses from lower-left to the large jar on the right. Decorative distant pottery is not interactive.
 
-- Start: Ganesha is on the lower-left; a large serving jar is on the right.
-- Player action: rub away the butter spill and scattered clay pieces blocking the floor route.
-- Success: the route clears and Ganesha crawls/reaches the large jar.
-- Decoys/hazards: distant pots and wall decoration only. This is not a basket-pile puzzle.
+**Composition review prompt**
 
-### Composition prompt
+> Original portrait palace exterior floor puzzle with canonical two-armed Ganesha crawling from lower-left toward one large terracotta serving jar on the right. Between them, one broad horizontal removable obstruction combines a pale golden butter spill and rounded clay fragments; leave the destination jar visible. Clear route and generous finger-rub area, warm morning light, quiet palace wall and floor, child-friendly hand-painted storybook art. No basket pile, text or UI. Supply an entirely clean floor repaint under the obstruction.
 
-> Portrait 9:16 palace exterior floor puzzle for a premium children's mobile game. Bal Ganesha crawls from lower-left toward a very large terracotta serving jar on the lower-right. Between them is one continuous readable obstruction made from a pale golden butter spill and several rounded harmless clay fragments. The obstruction forms a broad horizontal finger-rub area but does not hide the destination jar. Warm palace wall and courtyard floor, bright morning light, friendly rounded shapes, uncluttered path, original hand-painted storybook art, no basket pile, no text, no UI. Provide a completely clean floor repaint beneath the spill and fragments.
-
-### Required exports
-
-| Slot / file stem | State | Pivot |
+| Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
-| `BG_C01_002_PalaceFloor` | Clean path repaint | Center |
-| `CHR_Ganesha_Crawl` | Start pose | Bottom-center |
-| `INT_C01_002_Target` | Spill + removable blocking fragments as one transparent surface | Center |
-| `PROP_Clay_Shards` | Noninteractive edge dressing, visibly subdued | Bottom-center |
-| `PROP_Jar_Large` | Destination jar | Bottom-center |
-| `CHR_Ganesha_ReachJar` | Success pose | Bottom-center |
-| `VFX_Clear_Dust` | Soft wipe particles | Center |
+| `INT_C01_002_Target` | One connected silhouette of pale butter spill plus the blocking rounded clay pieces; isolated on transparent canvas. | Center |
+| `PROP_Clay_Shards` | A few subdued **nonblocking** edge fragments; visually distinct from the erasable obstruction. | Bottom-center |
+| `PROP_Jar_Large` | One large intact destination serving jar filled with modaks, easy to recognize at phone size. | Bottom-center |
+| `VFX_Reward_Glow` | Soft isolated golden reward sparkle with transparent falloff, no jar baked into it. | Center |
 
 ## Level 3 — The Cupboard Secret
 
-### Gameplay lock
+**Video-verified action:** erase one closed cupboard door. Exactly three bowls of modaks are visible on two shelves after reveal. One floor jar and a column are context only.
 
-- Start: one closed wall cupboard is centered/right; a floor jar and column provide context.
-- Player action: rub away the single cupboard door.
-- Success: three bowls of modaks are revealed on shelves.
-- Decoys/hazards: none. This level has one cupboard, not three.
+**Composition review prompt**
 
-### Composition prompt
+> Original warm palace storeroom puzzle in portrait 9:16. One large wall cupboard stands center-right at child eye level; a single broad wooden door is the only erasable target. Canonical two-armed Ganesha waits lower-left and looks toward it. A substantial column and one floor jar frame the scene without competing for attention. Behind the removable door: a complete wooden frame and two shelves holding exactly three separate bowls of golden modaks. Soft amber interior light and simple carved wood; no second cupboard, text or UI. Provide complete shelf and wall repaint beneath the door.
 
-> Portrait 9:16 warm palace storeroom puzzle. One large closed wooden wall cupboard occupies the middle-right at child eye level, with a simple broad door that is easy to rub. Young Bal Ganesha waits at lower-left and looks at it. A thick palace column and one large floor jar frame the scene without competing for attention. Behind the removable door are two shelves holding exactly three small golden bowls of modaks. Soft amber interior light, carved but simple wood, turquoise knob, original polished 2D storybook game art, no other cupboard doors, no text, no UI. Deliver the open cupboard interior and wall repaint as complete artwork beneath the separate door.
-
-### Required exports
-
-| Slot / file stem | State | Pivot |
+| Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
-| `BG_C01_003_Storeroom` | Room, column and floor jar | Center |
-| `ENV_Cupboard_Frame` | Frame and open shelf interior | Bottom-center |
-| `INT_C01_003_Target` | One closed cupboard door | Hinge side |
-| `PROP_Modak_Bowl_1..3` | Three separate reward bowls | Bottom-center |
-| `CHR_Ganesha_Curious` | Look/point pose | Bottom-center |
-| `VFX_Cupboard_Reveal` | Warm dust + sparkle | Center |
+| `ENV_Cupboard_Frame` | Open wooden frame and two complete empty shelves, no door or bowls. | Bottom-center |
+| `INT_C01_003_Target` | One full closed wooden cupboard door with a simple turquoise knob; no frame. | Hinge side |
+| `PROP_Modak_Bowl_1` | One small golden bowl of modaks for top shelf. | Bottom-center |
+| `PROP_Modak_Bowl_2` | Matching but not identical bowl for lower-left shelf. | Bottom-center |
+| `PROP_Modak_Bowl_3` | Matching but not identical bowl for lower-right shelf. | Bottom-center |
+| `VFX_Reward_Glow` | Reuse Level 2 glow. | Center |
 
 ## Level 4 — The Balance Trick
 
-### Gameplay lock
+**Video-verified action:** erase the smaller wrapped load on the **left** end of a balance beam. The large covered jar on the **right** remains; the beam rotates around its geometric center and presents the reward jar. Broken pottery at the far side is dressing, not a target.
 
-- Start: a wooden balance beam rests on a central fulcrum with two differently weighted covered loads.
-- Player action: rub away the smaller/light removable weight on the left.
-- Success: the beam rotates and presents the large modak jar.
-- Decoys/hazards: the large right covered load remains; silhouettes must clearly differ.
+**Composition review prompt**
 
-### Composition prompt
+> Original portrait palace storeroom physics puzzle. A child-friendly wooden beam sits on a central triangular fulcrum. One small purple wrapped weight rests on the left end; one much larger covered terracotta jar rests on the right end. Canonical two-armed Ganesha watches from the lower side in a thoughtful pose. Leave visible rotation clearance and make the small left target easy to rub without touching the right load. Warm amber plaster and softly textured floor, rounded harmless forms, polished hand-painted storybook style. No dangerous machinery, text or UI. Export beam, fulcrum, left weight, heavy covered jar and revealed jar separately.
 
-> Portrait 9:16 palace storeroom puzzle featuring a large child-friendly wooden balance beam across the center on a sturdy triangular fulcrum. A small clearly removable wrapped weight sits on the left end; a larger covered terracotta jar sits on the right end. Bal Ganesha watches from lower-left in a thinking pose. Leave clear rotation space around the beam. Use simple contrasting silhouettes and colors so the small target is readable without text. Warm amber storeroom, friendly physics-toy feeling, original hand-painted 2D children's game art, no dangerous machinery, no UI, no text. Supply the beam, fulcrum, small weight, covered jar and revealed reward jar as separate layers.
-
-### Required exports
-
-| Slot / file stem | State | Pivot |
+| Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
-| `BG_C01_004_Storeroom` | Clean environment | Center |
-| `PROP_Balance_Fulcrum` | Static base | Top-center |
-| `PROP_Balance_Beam` | Rotating beam | Exact geometric center |
-| `INT_C01_004_Target` | Small/light removable weight | Bottom-center |
-| `PROP_CoveredJar_Heavy` | Right load | Bottom-center |
-| `PROP_Jar_Reward` | Revealed jar state | Bottom-center |
-| `CHR_Ganesha_Think` | Start pose | Bottom-center |
-| `CHR_Ganesha_Celebrate` | Success pose | Bottom-center |
+| `PROP_Balance_Fulcrum` | One sturdy triangular wooden support. | Top-center |
+| `PROP_Balance_Beam` | One straight sturdy wooden beam with clean center point and no load attached. | Exact geometric center |
+| `INT_C01_004_Target` | Small purple wrapped weight only; clear silhouette, no beam segment. | Bottom-center |
+| `PROP_CoveredJar_Heavy` | Much larger covered terracotta load for right beam end. | Bottom-center |
+| `PROP_Jar_Reward` | Uncovered large modak jar for the success state; reuse this visual language in Level 5. | Bottom-center |
 
 ## Level 5 — Which Pot Has Modaks?
 
-### Gameplay lock
+**Video-verified action:** three covered pots form a triangle: upper-left, upper-right, and lower-center. Erase only the lower-center cover. The upper covers remain. A subtle crumb clue can be used; do not make color alone identify the answer.
 
-- Start: three covered pots form a triangle: upper-left, upper-right and lower-center.
-- Player action: rub away the correct lower-center cover.
-- Success: a full modak jar is revealed.
-- Decoys/hazards: two upper covered pots remain untouched and must have distinct but equally plausible cloth designs.
+**Composition review prompt**
 
-### Composition prompt
+> Original portrait palace storeroom choice-by-erasing puzzle. Exactly three covered terracotta pots form a spacious triangle: one upper-left, one upper-right, and the correct lower-center pot closer to the viewer. Canonical two-armed Ganesha observes from lower-left. Give the three cloths distinct festive hems and colors while keeping all plausible; add one subtle golden crumb near the lower-center pot as a fair clue. Beneath that removable lower-center cloth is one full terracotta modak jar. Warm lamp light, quiet walls, generous touch separation, original polished 2D storybook art. No fourth pot, text, UI or watermark. Supply intact repaint behind every cover.
 
-> Portrait 9:16 warm palace storeroom selection puzzle. Exactly three covered terracotta pots form a clear triangle: one upper-left, one upper-right, and one lower-center closer to the player. Each has a distinct festive cloth color and hem pattern, while the lower-center cloth has one subtle fair-play clue such as a tiny golden crumb near its base. Bal Ganesha observes from lower-left. Keep generous empty space between covers so finger input cannot overlap. Under the lower-center removable cloth is a rich terracotta jar filled with golden modaks. Original polished hand-painted children's storybook game art, warm lamp light, no text, no UI, no watermark. Deliver all three covers and all pot states separately, with repaint behind every removable object.
-
-### Required exports
-
-| Slot / file stem | State | Pivot |
+| Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
-| `BG_C01_005_Storeroom` | Clean environment | Center |
-| `PROP_CoveredJar_Decoy_A` | Upper-left cover and pot | Bottom-center |
-| `PROP_CoveredJar_Decoy_B` | Upper-right cover and pot | Bottom-center |
-| `INT_C01_005_Target` | Lower-center removable cloth only | Top-center |
-| `PROP_Jar_Reward` | Lower-center jar beneath cloth | Bottom-center |
-| `CHR_Ganesha_Inspect` | Start pose | Bottom-center |
-| `CHR_Ganesha_Celebrate` | Success pose | Bottom-center |
-| `VFX_Reward_Glow` | Sparkle burst/loop | Center |
+| `PROP_CoveredJar_Decoy_A` | Upper-left pot with brown festive cloth; intact and noninteractive. | Bottom-center |
+| `PROP_CoveredJar_Decoy_B` | Upper-right pot with purple festive cloth; intact and noninteractive. | Bottom-center |
+| `INT_C01_005_Target` | Lower-center removable dark cloth only; no jar body baked into it. | Top-center |
+| `PROP_Jar_Reward` | Correct lower-center jar with golden modaks; may reuse the Level 4 reward jar art. | Bottom-center |
+| `VFX_Reward_Glow` | Reuse the same soft gold sparkle. | Center |
 
-## Review gate before final rendering
+## Import and approval gate
 
-Approve a flat color composition for all five levels together before detailed painting. The review must confirm:
-
-- Target position and count match the gameplay lock.
-- A child can identify the interactive area without instructional text.
-- Target, character and reward do not overlap the top HUD or bottom feedback area.
-- Every removable surface has a complete repaint below it.
-- Shared assets keep identical scale, palette, light direction and pivots.
-- The five scenes look related but not like duplicated full-screen backgrounds.
-
+1. Review five flat-color compositions together against the video-verified target positions and the supplied Ganesha identity.
+2. Export the shared environment kit and isolated sprites using the exact slot names above. A single prompt-generated flattened scene is a concept, not a Unity-ready art package.
+3. Check alpha, safe padding, pivots, 1080 × 1920 framing and complete repaint beneath each removable target.
+4. In Unity run `Tools → Bal Ganesha Game → Build First 5 Playable Levels`, assign new sprites in `ART_C01_00N`, and play Levels 1–5. The supplied crawl sprite is automatically assigned when the art sets are first created.
+5. Approve Ganesha's final turnaround with a cultural reviewer before cutting a rig or recording dialogue.

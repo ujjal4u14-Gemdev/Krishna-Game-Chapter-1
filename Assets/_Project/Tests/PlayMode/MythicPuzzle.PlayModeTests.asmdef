@@ -1,0 +1,7 @@
+{
+  "name": "MythicPuzzle.PlayModeTests",
+  "rootNamespace": "MythicPuzzle.Tests",
+  "references": ["MythicPuzzle.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

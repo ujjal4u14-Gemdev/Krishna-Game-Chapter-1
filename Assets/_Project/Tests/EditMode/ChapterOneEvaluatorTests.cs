@@ -80,6 +80,30 @@ namespace MythicPuzzle.Tests
             }
         }
 
+        [Test]
+        public void SceneRegistry_ResolvesEntitiesInSiblingSceneRoots()
+        {
+            var contentRoot = new GameObject("Test Level Content");
+            var systemsRoot = new GameObject("Test Gameplay Systems");
+            try
+            {
+                var entityObject = new GameObject("Test Reward");
+                entityObject.transform.SetParent(contentRoot.transform);
+                var entity = entityObject.AddComponent<SceneEntity>();
+                SetField(entity, "entityId", "test_sibling_reward");
+
+                var registry = systemsRoot.AddComponent<SceneRegistry>();
+                registry.Rebuild();
+                Assert.That(registry.TryGet("test_sibling_reward", out var found), Is.True);
+                Assert.That(found, Is.SameAs(entity));
+            }
+            finally
+            {
+                Object.DestroyImmediate(systemsRoot);
+                Object.DestroyImmediate(contentRoot);
+            }
+        }
+
         private void Set<T>(string fieldName, T value)
         {
             SetField(definition, fieldName, value);

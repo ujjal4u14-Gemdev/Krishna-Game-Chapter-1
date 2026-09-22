@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35f9edc3c8e0c9ffb308e490018b112, type: 3}
+  m_Name: ART_C01_002
+  m_EditorClassIdentifier: 
+  levelId: LVL_C01_002
+  bindings:
+  - slotId: CHR_Ganesha_Crawl
+    sprite: {fileID: 21300000, guid: 429fc530556a70e48b0e95ca8d2b883e, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0

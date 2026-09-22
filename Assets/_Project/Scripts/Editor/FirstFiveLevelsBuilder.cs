@@ -21,6 +21,8 @@ namespace MythicPuzzle.Editor
     {
         private const string DataRoot = "Assets/_Project/Data";
         private const string SceneRoot = "Assets/_Project/Scenes/Chapters/C01";
+        private const string GaneshaCrawlPath =
+            "Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Crawl.png";
 
         private sealed class LevelSpec
         {
@@ -39,6 +41,7 @@ namespace MythicPuzzle.Editor
         public static void Build()
         {
             EnsureFolders();
+            EnsureSpriteImport(GaneshaCrawlPath);
             var specs = Specs();
             var buildScenes = new List<EditorBuildSettingsScene>();
 
@@ -49,7 +52,9 @@ namespace MythicPuzzle.Editor
                 var puzzle = CreatePuzzle(spec, intro, success);
                 var level = CreateLevel(spec, puzzle);
                 var artSet = CreateArtSet(spec);
-                var scenePath = CreateScene(spec, level, artSet);
+                var scenePath = ScenePath(spec.Number);
+                if (!File.Exists(scenePath)) CreateScene(spec, level, artSet);
+                else Debug.Log($"Preserving existing scene: {scenePath}");
                 buildScenes.Add(new EditorBuildSettingsScene(scenePath, true));
             }
 
@@ -192,7 +197,39 @@ namespace MythicPuzzle.Editor
         {
             var artSet = Asset<LevelArtSet>($"{DataRoot}/Presentation/C01/ART_C01_{spec.Number:000}.asset");
             Set(artSet, "levelId", $"LVL_C01_{spec.Number:000}");
+            var crawl = AssetDatabase.LoadAssetAtPath<Sprite>(GaneshaCrawlPath);
+            if (crawl != null) EnsureBinding(artSet, "CHR_Ganesha_Crawl", crawl);
             return artSet;
+        }
+
+        private static void EnsureSpriteImport(string path)
+        {
+            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (importer == null) return;
+            if (importer.textureType == TextureImporterType.Sprite &&
+                !importer.mipmapEnabled && importer.alphaIsTransparency) return;
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 100f;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.SaveAndReimport();
+        }
+
+        private static void EnsureBinding(LevelArtSet artSet, string slotId, Sprite sprite)
+        {
+            var serialized = new SerializedObject(artSet);
+            var bindings = serialized.FindProperty("bindings");
+            for (var i = 0; i < bindings.arraySize; i++)
+                if (bindings.GetArrayElementAtIndex(i).FindPropertyRelative("slotId").stringValue == slotId)
+                    return;
+            var binding = bindings.GetArrayElementAtIndex(bindings.arraySize++);
+            binding.FindPropertyRelative("slotId").stringValue = slotId;
+            binding.FindPropertyRelative("sprite").objectReferenceValue = sprite;
+            binding.FindPropertyRelative("tint").colorValue = Color.white;
+            binding.FindPropertyRelative("useNativeSize").boolValue = false;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(artSet);
         }
 
         private static string CreateScene(LevelSpec spec, LevelDefinition level, LevelArtSet artSet)
@@ -241,7 +278,8 @@ namespace MythicPuzzle.Editor
         {
             Art("Background", "BG_Far", parent, Vector3.zero, new Vector2(6.1f, 10.8f),
                 new Color(0.18f, 0.09f, 0.24f), -20);
-            Art("Palace Wall", "BG_Mid_Palace", parent, new Vector3(0f, 0.25f), new Vector2(5.4f, 8.6f),
+            var wallSlot = spec.Number <= 2 ? "BG_Mid_Palace" : "BG_Mid_Storeroom";
+            Art("Palace Wall", wallSlot, parent, new Vector3(0f, 0.25f), new Vector2(5.4f, 8.6f),
                 new Color(0.91f, 0.63f, 0.33f), -15);
             Art("Floor", "BG_Floor", parent, new Vector3(0f, -3.75f), new Vector2(5.7f, 2.0f),
                 new Color(0.48f, 0.19f, 0.14f), -10);
@@ -264,7 +302,7 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutOne(Transform parent)
         {
-            Actor(parent, new Vector3(-1.65f, -2.55f), new Vector2(1.35f, 1.0f));
+            Actor(parent, new Vector3(-1.65f, -2.55f), new Vector2(1.35f, 1.85f));
             var jar = Entity("Hanging Modak Jar", "jar_hanging", parent);
             Art("Jar Art", "PROP_Jar_Hanging", jar.transform, Vector3.zero, new Vector2(1.45f, 1.55f),
                 new Color(0.71f, 0.23f, 0.12f), 1);
@@ -278,7 +316,7 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutTwo(Transform parent)
         {
-            Actor(parent, new Vector3(-2.0f, -2.3f), new Vector2(1.25f, 0.95f));
+            Actor(parent, new Vector3(-2.0f, -2.3f), new Vector2(1.35f, 1.85f));
             Art("Large Serving Jar", "PROP_Jar_Large", parent, new Vector3(1.75f, -1.55f), new Vector2(1.55f, 2.1f),
                 new Color(0.69f, 0.22f, 0.12f), 1);
             Art("Decorative Shards", "PROP_Clay_Shards", parent, new Vector3(-0.6f, -2.5f), new Vector2(1.1f, 0.35f),
@@ -290,7 +328,7 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutThree(Transform parent)
         {
-            Actor(parent, new Vector3(-1.85f, -2.55f), new Vector2(1.15f, 1.0f));
+            Actor(parent, new Vector3(-1.85f, -2.55f), new Vector2(1.35f, 1.85f));
             Art("Cupboard Frame", "ENV_Cupboard_Frame", parent, new Vector3(0.85f, 0.7f), new Vector2(2.75f, 3.35f),
                 new Color(0.35f, 0.12f, 0.08f), 0);
             for (var i = 0; i < 3; i++)
@@ -304,13 +342,14 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutFour(Transform parent)
         {
-            Actor(parent, new Vector3(-2.0f, -2.55f), new Vector2(1.2f, 1.0f));
+            Actor(parent, new Vector3(-2.0f, -2.55f), new Vector2(1.35f, 1.85f));
             Art("Fulcrum", "PROP_Balance_Fulcrum", parent, new Vector3(0f, -0.25f), new Vector2(0.55f, 2.2f),
                 new Color(0.34f, 0.15f, 0.1f), 0);
             var beam = Entity("Balance Beam", "balance_beam", parent);
-            Art("Beam", "PROP_Balance_Beam", beam.transform, new Vector3(0f, 0.55f), new Vector2(4.25f, 0.28f),
+            beam.transform.position = new Vector3(0f, 0.55f);
+            Art("Beam", "PROP_Balance_Beam", beam.transform, Vector3.zero, new Vector2(4.25f, 0.28f),
                 new Color(0.45f, 0.2f, 0.1f), 1);
-            Art("Heavy Covered Jar", "PROP_CoveredJar_Heavy", beam.transform, new Vector3(1.55f, 1.15f), new Vector2(1.35f, 1.55f),
+            Art("Heavy Covered Jar", "PROP_CoveredJar_Heavy", beam.transform, new Vector3(1.55f, 0.6f), new Vector2(1.35f, 1.55f),
                 new Color(0.26f, 0.55f, 0.7f), 2);
             var reward = Entity("Level Complete Visual", "level_complete_visual", parent);
             Art("Reward Modak Jar", "PROP_Jar_Reward", reward.transform, new Vector3(1.55f, 1.05f), new Vector2(1.05f, 1.2f),
@@ -319,7 +358,7 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutFive(Transform parent)
         {
-            Actor(parent, new Vector3(-2.0f, -2.65f), new Vector2(1.1f, 0.95f));
+            Actor(parent, new Vector3(-2.0f, -2.65f), new Vector2(1.35f, 1.85f));
             Art("Upper Left Covered Pot", "PROP_CoveredJar_Decoy_A", parent, new Vector3(-1.3f, 1.3f), new Vector2(1.55f, 1.65f),
                 new Color(0.48f, 0.55f, 0.82f), 1);
             Art("Upper Right Covered Pot", "PROP_CoveredJar_Decoy_B", parent, new Vector3(1.3f, 1.3f), new Vector2(1.55f, 1.65f),
@@ -337,7 +376,6 @@ namespace MythicPuzzle.Editor
             actor.transform.position = position;
             Art("Ganesha Art", "CHR_Ganesha_Crawl", actor.transform, Vector3.zero, size,
                 new Color(0.93f, 0.48f, 0.45f), 4);
-            Label("GANESHA", actor.transform, Vector3.zero, 0.12f, 6, Color.white);
         }
 
         private static void CreateEraseSurface(
@@ -417,13 +455,14 @@ namespace MythicPuzzle.Editor
         {
             var gameObject = new GameObject(name, typeof(SpriteRenderer), typeof(SpriteArtSlot));
             gameObject.transform.SetParent(parent, false);
-            gameObject.transform.position = position;
+            gameObject.transform.localPosition = position;
             gameObject.transform.localScale = new Vector3(size.x, size.y, 1f);
             var slot = gameObject.GetComponent<SpriteArtSlot>();
             Set(slot, "slotId", slotId);
             Set(slot, "targetRenderer", gameObject.GetComponent<SpriteRenderer>());
             Set(slot, "fallbackColor", color);
             Set(slot, "sortingOrder", order);
+            Set(slot, "referenceSize", size);
             return gameObject;
         }
 
@@ -605,6 +644,14 @@ namespace MythicPuzzle.Editor
         {
             var serialized = new SerializedObject(target);
             serialized.FindProperty(property).colorValue = value;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(target);
+        }
+
+        private static void Set(Object target, string property, Vector2 value)
+        {
+            var serialized = new SerializedObject(target);
+            serialized.FindProperty(property).vector2Value = value;
             serialized.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(target);
         }

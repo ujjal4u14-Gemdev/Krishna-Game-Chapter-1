@@ -39,10 +39,12 @@ After the festival preparations, Ganesha's young companions Mitra and Veer follo
 ### Bal Ganesha
 
 - Readable silhouette at 18–22% of portrait screen height.
-- Separate layers: head, ears, eyes, brows, mouth, trunk segments, torso, upper/lower arms, four hands, legs, ornaments and held prop.
-- Hand set: relaxed, point, hold modak, aim seed, release, shield, celebrate.
+- Canonical visual reference: `Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Source/Ganesha_Canonical_Reference.png`. The supplied image, rather than the reference-game character, controls identity and costume.
+- Peach-pink skin, two arms, two legs, curled trunk, two short tusks, red forehead mark, tall ornate gold crown with a central red jewel, red-gem gold ornaments, sacred thread, and orange dhoti with yellow trim must stay consistent in every pose.
+- Separate layers for rig production: head, ears, eyes, brows, mouth, trunk segments, torso, left/right upper and lower arms, two hands, legs, crown, ornaments, dhoti and held prop.
+- Hand set: relaxed, point, hold modak, aim seed, release, shield, celebrate. Keep exactly two visible arms in the approved game design.
 - Expression set: neutral, curious, thinking, happy, surprised, effort, gentle fail.
-- Never mirror sacred marks or asymmetrical jewelry accidentally; approve the canonical turnaround before rigging.
+- Never mirror sacred marks or asymmetrical jewelry accidentally; approve a turnaround derived from the supplied character image before rigging.
 
 ### Maa Parvati and companions
 

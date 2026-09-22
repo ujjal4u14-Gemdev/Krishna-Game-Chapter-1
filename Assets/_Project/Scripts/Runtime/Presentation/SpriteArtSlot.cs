@@ -14,6 +14,7 @@ namespace MythicPuzzle.Runtime
         [SerializeField] private SpriteRenderer targetRenderer;
         [SerializeField] private Color fallbackColor = Color.white;
         [SerializeField] private int sortingOrder;
+        [SerializeField] private Vector2 referenceSize = Vector2.one;
 
         private Texture2D fallbackTexture;
         private Sprite fallbackSprite;
@@ -34,7 +35,19 @@ namespace MythicPuzzle.Runtime
 
             targetRenderer.sprite = binding.sprite;
             targetRenderer.color = binding.tint.a <= 0f ? Color.white : binding.tint;
-            if (binding.useNativeSize) targetRenderer.transform.localScale = Vector3.one;
+            if (binding.useNativeSize)
+            {
+                targetRenderer.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                var bounds = binding.sprite.bounds.size;
+                if (bounds.x > 0f && bounds.y > 0f)
+                {
+                    var scale = Mathf.Min(referenceSize.x / bounds.x, referenceSize.y / bounds.y);
+                    targetRenderer.transform.localScale = new Vector3(scale, scale, 1f);
+                }
+            }
         }
 
         private void CreateFallback()

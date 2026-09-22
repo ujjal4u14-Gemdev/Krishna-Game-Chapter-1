@@ -4,6 +4,21 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/_Project/Scenes/Chapters/C01/Level_001_BalGanesha.unity
+    guid: 6cfb330f3684a0143b610c10789ae59c
+  - enabled: 1
+    path: Assets/_Project/Scenes/Chapters/C01/Level_002_BalGanesha.unity
+    guid: 3007d721c142d5849bef3832e6fdff98
+  - enabled: 1
+    path: Assets/_Project/Scenes/Chapters/C01/Level_003_BalGanesha.unity
+    guid: dfd11d4b5287982469d67e191e3ce178
+  - enabled: 1
+    path: Assets/_Project/Scenes/Chapters/C01/Level_004_BalGanesha.unity
+    guid: a97ece00ca1e4e145838bed7f4cb240e
+  - enabled: 1
+    path: Assets/_Project/Scenes/Chapters/C01/Level_005_BalGanesha.unity
+    guid: 59afb0a00cf5bac4ab8ffc756aeec465
   m_configObjects: {}
 

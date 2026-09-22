@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9939e3a6c0bf11d2f0c3e093a141bc, type: 3}
+  m_Name: PZ_C01_003_EraseReveal
+  m_EditorClassIdentifier: 
+  puzzleId: PZ_C01_003_EraseReveal
+  puzzleType: 0
+  correctEntityIds:
+  - ENT_C01_003_CupboardDoor_Target
+  orderedEntityIds: []
+  validPairs: []
+  correctSwipeDirection: 0
+  requiredCount: 1
+  maxAttempts: 0
+  timeLimitSeconds: 0
+  requiredProgress: 0.72
+  resetAfterFailure: 1
+  introSequence: {fileID: 11400000, guid: cd46f6364a0f97d4db0f145a76ed8a69, type: 2}
+  successSequence: {fileID: 11400000, guid: 6e86de1e11fe96f409aede47365e54ed, type: 2}
+  failureSequence: {fileID: 0}
