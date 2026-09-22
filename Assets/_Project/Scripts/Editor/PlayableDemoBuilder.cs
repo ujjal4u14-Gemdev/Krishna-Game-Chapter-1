@@ -167,7 +167,7 @@ namespace MythicPuzzle.Editor
         {
             var group = Entity("Erase Puzzle", "erase_group", parent);
             var hidden = Solid("Hidden Modaks", group.transform, new Vector3(0f, 0f, 0f), new Vector2(3.4f, 2.3f), new Color(1f, 0.68f, 0.08f), 0);
-            Label("BUTTER REVEALED", hidden.transform, Vector3.zero, 0.12f, 1);
+            Label("MODAKS REVEALED", hidden.transform, Vector3.zero, 0.12f, 1);
 
             var mask = Entity("Erasable Mask", "rope_mask", group.transform);
             mask.AddComponent<BoxCollider2D>().size = new Vector2(5.2f, 4.2f);
@@ -235,7 +235,7 @@ namespace MythicPuzzle.Editor
             Set(controller, "useDirectPointerInput", true);
 
             CreateProjectileTarget(group.transform, "Modak Jar", "modak_jar", new Vector3(1.35f, 1.7f, 0f),
-                new Vector2(1.15f, 1.15f), new Color(1f, 0.68f, 0.08f), "POT");
+                new Vector2(1.15f, 1.15f), new Color(1f, 0.68f, 0.08f), "JAR");
             CreateProjectileTarget(group.transform, "Hazard", "bell_hazard", new Vector3(-1.2f, 0.6f, 0f),
                 new Vector2(1.1f, 1.1f), new Color(0.85f, 0.2f, 0.2f), "X");
         }

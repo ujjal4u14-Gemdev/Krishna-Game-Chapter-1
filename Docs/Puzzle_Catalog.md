@@ -7,7 +7,7 @@ The complete framework recognizes 18 puzzle templates. The first eight are suffi
 | # | Template | Player action | Reusable scene examples |
 | ---: | --- | --- | --- |
 | 1 | Tap Select | Tap the correct target | Correct pot, correct path, safe animal, hidden switch |
-| 2 | Multi Select | Find several targets | Feathers, butter pieces, footprints, friends |
+| 2 | Multi Select | Find several targets | Feathers, modak pieces, footprints, friends |
 | 3 | Drag & Drop | Drag source to destination | Give flute, place bridge stone, feed animal |
 | 4 | Sequence Order | Tap items in order | Musical notes, stepping stones, ritual sequence |
 | 5 | Swipe Direction | Swipe correctly | Dodge branch, move cloud, redirect projectile |
