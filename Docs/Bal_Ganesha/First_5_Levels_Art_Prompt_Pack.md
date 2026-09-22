@@ -4,11 +4,11 @@ These prompts support the playable Unity slice in `FirstFiveLevelsBuilder.cs`. T
 
 ## Locks shared by every prompt
 
-- Original premium 2D children's storybook art for a 1080 × 1920 portrait game; warm Indian palace architecture; soft, readable silhouettes; saffron, terracotta, muted turquoise and marigold accents; upper-left morning light.
+- Original premium 2D children's storybook art for a 1170 × 2532 portrait game; warm Indian palace architecture; soft, readable silhouettes; saffron, terracotta, muted turquoise and marigold accents; upper-left morning light.
 - Preserve the supplied Ganesha's peach-pink skin, **two arms**, curled trunk, two short tusks, red forehead mark, tall ornate gold crown with central red jewel, red-gem gold jewelry, sacred thread, and orange dhoti with yellow trim. No peacock feather, blue skin, third or fourth arm, or alternate costume.
 - Background art contains no characters, targets, rewards, removable covers, colliders, UI or text. Every removed object needs complete repaint beneath it.
 - Sprite prompts produce one isolated object on a truly transparent background with safe padding. Background prompts bleed to all four edges. No text, UI, watermark, fake screenshot, photorealism, weapons, horror or modern objects.
-- Master composition is 2160 × 3840; Unity reference is 1080 × 1920. Keep required interactions within X 90–990 and Y 250–1690 at reference size. Import sprite PNGs with sRGB and alpha on, mipmaps off. Keep layered PSD/KRA masters for final production.
+- Master composition is 2340 × 5064; Unity reference is 1170 × 2532. Keep required interactions within X 98–1072 and Y 330–2228 at reference size. Import sprite PNGs with sRGB and alpha on, mipmaps off; backgrounds require a 4096-pixel max texture size or higher. Keep layered PSD/KRA masters for final production.
 - The prompt's composition image is a review aid. Export the listed objects as separate PNGs named exactly after the `SpriteArtSlot` IDs below. Do not use a flattened scene image as gameplay art.
 
 ### Canonical character prompt
@@ -47,6 +47,8 @@ The current builder binds `BG_Mid_Palace` on Levels 1–2 and `BG_Mid_Storeroom`
 | `PROP_Jar_Broken` | Two or three large harmless rounded jar pieces at rest after falling; no sharp shards. | Bottom-center |
 | `PROP_Modaks_Pile` | Small readable pile of golden modaks separate from broken ceramic. | Bottom-center |
 
+The playable Level 1 now uses the complete clean `BG_C01_001_Courtyard` plate at exactly 1170 × 2532, plus four independent transparent sprites listed above and the shared Ganesha crawl sprite. The plate intentionally contains no interactive object, character, food, or break-state art. Paths and generation prompts are recorded in `Level_1_Asset_Manifest.md`. Future scenes can use the modular palace kit instead of a hero plate.
+
 Success animation uses the existing jar entity moving downward, then swaps to the separate broken-jar and modak sprites. Rope dust and extra falling frames are later animation additions, not required `LevelArtSet` slots.
 
 ## Level 2 — A Messy Path
@@ -70,7 +72,7 @@ Success animation uses the existing jar entity moving downward, then swaps to th
 
 **Composition review prompt**
 
-> Original warm palace storeroom puzzle in portrait 9:16. One large wall cupboard stands center-right at child eye level; a single broad wooden door is the only erasable target. Canonical two-armed Ganesha waits lower-left and looks toward it. A substantial column and one floor jar frame the scene without competing for attention. Behind the removable door: a complete wooden frame and two shelves holding exactly three separate bowls of golden modaks. Soft amber interior light and simple carved wood; no second cupboard, text or UI. Provide complete shelf and wall repaint beneath the door.
+> Original warm palace storeroom puzzle in 1170:2532 portrait. One large wall cupboard stands center-right at child eye level; a single broad wooden door is the only erasable target. Canonical two-armed Ganesha waits lower-left and looks toward it. A substantial column and one floor jar frame the scene without competing for attention. Behind the removable door: a complete wooden frame and two shelves holding exactly three separate bowls of golden modaks. Soft amber interior light and simple carved wood; no second cupboard, text or UI. Provide complete shelf and wall repaint beneath the door.
 
 | Slot | Transparent asset prompt / state | Pivot |
 |---|---|---|
@@ -117,6 +119,6 @@ Success animation uses the existing jar entity moving downward, then swaps to th
 
 1. Review five flat-color compositions together against the video-verified target positions and the supplied Ganesha identity.
 2. Export the shared environment kit and isolated sprites using the exact slot names above. A single prompt-generated flattened scene is a concept, not a Unity-ready art package.
-3. Check alpha, safe padding, pivots, 1080 × 1920 framing and complete repaint beneath each removable target.
+3. Check alpha, safe padding, pivots, 1170 × 2532 framing and complete repaint beneath each removable target.
 4. In Unity run `Tools → Bal Ganesha Game → Build First 5 Playable Levels`, assign new sprites in `ART_C01_00N`, and play Levels 1–5. The supplied crawl sprite is automatically assigned when the art sets are first created.
 5. Approve Ganesha's final turnaround with a cultural reviewer before cutting a rig or recording dialogue.

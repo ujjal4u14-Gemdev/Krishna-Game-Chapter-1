@@ -17,7 +17,7 @@ Start with the [`Bal Ganesha production pack`](Docs/Bal_Ganesha/README.md). The 
 ## Engine lock
 
 - Unity 6000.0 LTS, portrait mobile
-- Reference resolution: 1080 × 1920
+- Reference resolution: 1170 × 2532
 - 2D Renderer / URP
 - Unity Input System or pointer events
 - Spine optional through an animation adapter
@@ -91,7 +91,7 @@ After Unity finishes compiling:
 
 1. Run `Tools > Bal Ganesha Game > Build First 5 Playable Levels`.
 2. Unity creates any missing level, puzzle, sequence and art-binding assets while preserving existing five-level scenes.
-3. Level 1 opens automatically. Set the Game view to `9:16`, press Play and rub the highlighted target.
+3. Level 1 opens automatically. Set the Game view to `1170 × 2532`, press Play and rub the rope.
 4. Use the completion panel to replay or continue through Level 5.
 
 The committed scenes use colored art slots, a reusable masked eraser and a transparent Ganesha crawl sprite derived from the supplied character reference. Replace visuals through each `ART_C01_00N` art set without changing gameplay IDs or code. See the [`Levels 1–5 art prompt pack`](Docs/Bal_Ganesha/First_5_Levels_Art_Prompt_Pack.md) and [`implementation guide`](Docs/Bal_Ganesha/First_5_Levels_Implementation_Guide.md).

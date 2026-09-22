@@ -91,11 +91,10 @@ Boot → Home → Chapter Map → Gameplay
 
 ## Resolution rules
 
-- Canvas Scaler reference: 1080 × 1920
+- Canvas Scaler reference: 1170 × 2532
 - Match Width Or Height: 0.5 as the initial value
 - Use anchors instead of absolute positions
 - Apply safe-area padding only at the system-root layer
 - Minimum touch target: 96 × 96 reference pixels
 - Gameplay art and UI must use separate canvases/sorting spaces
 - Test 16:9, 19.5:9, 20:9 and tablet layouts
-

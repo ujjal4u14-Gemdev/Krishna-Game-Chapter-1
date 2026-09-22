@@ -11,7 +11,7 @@ This folder is the content source of truth for the Bal Ganesha adaptation. The o
 | Arc A | Levels 1–25 — **The Missing Modaks** |
 | Arc B | Levels 26–54 — **The Shadow Naga Cave** |
 | Puzzle families | 13 Erase/Reveal, 15 Binary Choice/Route, 26 Aim & Shoot |
-| Target | Unity `6000.0.84f1`, Android, portrait 1080 × 1920 |
+| Target | Unity `6000.0.84f1`, Android, portrait 1170 × 2532 reference |
 | Content policy | Original artwork, dialogue and audio; do not copy the reference game's assets |
 
 ## Documents

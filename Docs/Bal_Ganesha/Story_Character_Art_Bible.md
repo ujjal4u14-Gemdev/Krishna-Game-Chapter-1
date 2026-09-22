@@ -101,7 +101,7 @@ Target **75% or more reuse** from this library. A level may receive unique anima
 
 ## Art delivery specification
 
-- Master canvas: 2160 × 3840; Unity reference: 1080 × 1920 portrait.
+- Master canvas: 2340 × 5064; Unity reference: 1170 × 2532 portrait.
 - Keep required interactions inside the central 900 × 1540 reference-safe area. Backgrounds must bleed to the full canvas.
 - Deliver layered `.psd` source through Git LFS and exported lossless PNG sprites. Do not flatten interactive layers.
 - Background depth: far, middle, gameplay plane, near foreground. Provide repaint beneath every erased or moved object.

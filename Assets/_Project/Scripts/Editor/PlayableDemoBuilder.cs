@@ -136,7 +136,7 @@ namespace MythicPuzzle.Editor
             cameraObject.transform.position = new Vector3(0f, 0f, -10f);
             var camera = cameraObject.GetComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 5.4f;
+            camera.orthographicSize = 6.1f * 2532f / 1170f * 0.5f;
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.06f, 0.08f, 0.13f);
 
@@ -255,7 +255,7 @@ namespace MythicPuzzle.Editor
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             var scaler = canvasObject.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1080f, 1920f);
+            scaler.referenceResolution = new Vector2(1170f, 2532f);
             scaler.matchWidthOrHeight = 0.5f;
 
             var instruction = UiText("Instructions", canvasObject.transform, new Vector2(0.06f, 0.82f), new Vector2(0.94f, 0.97f), 42);

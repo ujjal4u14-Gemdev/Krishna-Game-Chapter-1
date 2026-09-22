@@ -90,7 +90,7 @@ Every task folder contains:
 1. Approved concept and level row.
 2. Layered master with named groups: `BG_Far`, `BG_Mid`, `Gameplay`, `FG_Near`, `Interactive_*`, `Repaint`.
 3. Exported sprites with transparent padding and approved pivots.
-4. One composition PNG with the 1080 × 1920 safe-area overlay.
+4. One composition PNG with the 1170 × 2532 safe-area overlay.
 5. Animation notes listing reusable clip IDs before any request for a new clip.
 6. License/source note for fonts, brushes, textures and third-party elements.
 

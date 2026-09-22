@@ -44,7 +44,7 @@ Gameplay correctness never depends on a sprite filename. Final artwork can chang
 2. Wait until the lower-right import spinner and Console compilation finish.
 3. Select **Tools → Bal Ganesha Game → Build First 5 Playable Levels**.
 4. Level 1 opens automatically.
-5. Set the Game window to a portrait aspect, ideally `9:16` or `1080 × 1920`.
+5. Set the Game window to `1170 × 2532` portrait. Mobile devices use their native pixels while the UI scales from this reference.
 6. Press Play.
 7. Hold the left mouse button and rub across the blue target surface. On a phone, drag one finger.
 8. After success, press **Next Level**. Complete Levels 1–5 in order.

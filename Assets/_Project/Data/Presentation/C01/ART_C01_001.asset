@@ -18,3 +18,23 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 429fc530556a70e48b0e95ca8d2b883e, type: 3}
     tint: {r: 1, g: 1, b: 1, a: 1}
     useNativeSize: 0
+  - slotId: BG_Far
+    sprite: {fileID: 21300000, guid: f2c5dfe7897291d4b9d1cdbb9be1b978, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0
+  - slotId: INT_C01_001_Target
+    sprite: {fileID: 21300000, guid: de2149b581b123c44ba412959edc1e5e, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0
+  - slotId: PROP_Jar_Hanging
+    sprite: {fileID: 21300000, guid: 58c6535e88f859a4b938d1f6f6799c85, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0
+  - slotId: PROP_Jar_Broken
+    sprite: {fileID: 21300000, guid: 68872b1f2297ffb4a9d332dbe0ec20f4, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0
+  - slotId: PROP_Modaks_Pile
+    sprite: {fileID: 21300000, guid: b5038b83c1998cb4ebbafd4cc34fc10b, type: 3}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    useNativeSize: 0

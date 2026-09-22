@@ -23,6 +23,11 @@ namespace MythicPuzzle.Editor
         private const string SceneRoot = "Assets/_Project/Scenes/Chapters/C01";
         private const string GaneshaCrawlPath =
             "Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Crawl.png";
+        private const string LevelOneBackgroundPath =
+            "Assets/_Project/Art/Environments/C01/BG_C01_001_Courtyard.png";
+        private const string LevelOnePropsRoot = "Assets/_Project/Art/Props/C01";
+        private const float PortraitWorldWidth = 6.1f;
+        private const float PortraitWorldHeight = PortraitWorldWidth * 2532f / 1170f;
 
         private sealed class LevelSpec
         {
@@ -42,6 +47,7 @@ namespace MythicPuzzle.Editor
         {
             EnsureFolders();
             EnsureSpriteImport(GaneshaCrawlPath);
+            EnsureLevelOneSpriteImports();
             var specs = Specs();
             var buildScenes = new List<EditorBuildSettingsScene>();
 
@@ -63,6 +69,51 @@ namespace MythicPuzzle.Editor
             AssetDatabase.Refresh();
             EditorSceneManager.OpenScene(ScenePath(1));
             Debug.Log("Levels 1-5 built. Level 1 is open; press Play and erase the highlighted obstacle.");
+        }
+
+        [MenuItem("Tools/Bal Ganesha Game/Apply 1170x2532 Portrait Art")]
+        public static void ApplyPortraitArt()
+        {
+            EnsureLevelOneSpriteImports();
+            CreateArtSet(Specs()[0]);
+            PlayerSettings.defaultScreenWidth = 1170;
+            PlayerSettings.defaultScreenHeight = 2532;
+            PlayerSettings.defaultIsNativeResolution = false;
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
+
+            for (var number = 1; number <= 5; number++)
+            {
+                var scene = EditorSceneManager.OpenScene(ScenePath(number));
+                var camera = Object.FindFirstObjectByType<Camera>();
+                if (camera != null) camera.orthographicSize = PortraitWorldHeight * 0.5f;
+                var scaler = Object.FindFirstObjectByType<CanvasScaler>();
+                if (scaler != null) scaler.referenceResolution = new Vector2(1170f, 2532f);
+
+                var slots = Object.FindObjectsByType<SpriteArtSlot>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                foreach (var slot in slots)
+                {
+                    if (slot.SlotId == "BG_Far")
+                    {
+                        var size = new Vector2(PortraitWorldWidth, PortraitWorldHeight);
+                        slot.transform.localScale = new Vector3(size.x, size.y, 1f);
+                        Set(slot, "referenceSize", size);
+                    }
+                    if (number == 1 && (slot.SlotId == "BG_Mid_Palace" ||
+                                        slot.SlotId == "BG_Floor" || slot.SlotId == "ENV_Palace_Arch"))
+                        Object.DestroyImmediate(slot.gameObject);
+                }
+                if (number == 1)
+                {
+                    foreach (var label in Object.FindObjectsByType<TextMesh>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+                        if (label.gameObject.name.StartsWith("Label THE FIRST MODAK JAR"))
+                            Object.DestroyImmediate(label.gameObject);
+                }
+                EditorSceneManager.MarkSceneDirty(scene);
+                EditorSceneManager.SaveScene(scene);
+            }
+            AssetDatabase.SaveAssets();
+            EditorSceneManager.OpenScene(ScenePath(1));
+            Debug.Log("Portrait art applied to Levels 1-5 at 1170 x 2532; Level 1 art bound.");
         }
 
         private static List<LevelSpec> Specs() => new()
@@ -199,20 +250,43 @@ namespace MythicPuzzle.Editor
             Set(artSet, "levelId", $"LVL_C01_{spec.Number:000}");
             var crawl = AssetDatabase.LoadAssetAtPath<Sprite>(GaneshaCrawlPath);
             if (crawl != null) EnsureBinding(artSet, "CHR_Ganesha_Crawl", crawl);
+            if (spec.Number == 1)
+            {
+                BindSprite(artSet, "BG_Far", LevelOneBackgroundPath);
+                foreach (var slot in new[] { "INT_C01_001_Target", "PROP_Jar_Hanging", "PROP_Jar_Broken", "PROP_Modaks_Pile" })
+                    BindSprite(artSet, slot, $"{LevelOnePropsRoot}/{slot}.png");
+            }
             return artSet;
+        }
+
+        private static void BindSprite(LevelArtSet artSet, string slot, string path)
+        {
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (sprite != null) EnsureBinding(artSet, slot, sprite);
+            else Debug.LogWarning($"Missing Level 1 sprite: {path}");
+        }
+
+        private static void EnsureLevelOneSpriteImports()
+        {
+            EnsureSpriteImport(LevelOneBackgroundPath);
+            foreach (var slot in new[] { "INT_C01_001_Target", "PROP_Jar_Hanging", "PROP_Jar_Broken", "PROP_Modaks_Pile" })
+                EnsureSpriteImport($"{LevelOnePropsRoot}/{slot}.png");
         }
 
         private static void EnsureSpriteImport(string path)
         {
             var importer = AssetImporter.GetAtPath(path) as TextureImporter;
             if (importer == null) return;
+            var isBackground = path == LevelOneBackgroundPath;
             if (importer.textureType == TextureImporterType.Sprite &&
-                !importer.mipmapEnabled && importer.alphaIsTransparency) return;
+                !importer.mipmapEnabled && importer.alphaIsTransparency &&
+                (!isBackground || importer.maxTextureSize >= 4096)) return;
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
             importer.spritePixelsPerUnit = 100f;
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
+            if (isBackground) importer.maxTextureSize = 4096;
             importer.SaveAndReimport();
         }
 
@@ -268,7 +342,7 @@ namespace MythicPuzzle.Editor
             gameObject.transform.position = new Vector3(0f, 0f, -10f);
             var camera = gameObject.GetComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 5.4f;
+            camera.orthographicSize = PortraitWorldHeight * 0.5f;
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.08f, 0.05f, 0.14f);
             return camera;
@@ -276,8 +350,9 @@ namespace MythicPuzzle.Editor
 
         private static void BuildEnvironment(LevelSpec spec, Transform parent)
         {
-            Art("Background", "BG_Far", parent, Vector3.zero, new Vector2(6.1f, 10.8f),
+            Art("Background", "BG_Far", parent, Vector3.zero, new Vector2(PortraitWorldWidth, PortraitWorldHeight),
                 new Color(0.18f, 0.09f, 0.24f), -20);
+            if (spec.Number == 1) return; // Its full-bleed plate has clean repaint below every removable object.
             var wallSlot = spec.Number <= 2 ? "BG_Mid_Palace" : "BG_Mid_Storeroom";
             Art("Palace Wall", wallSlot, parent, new Vector3(0f, 0.25f), new Vector2(5.4f, 8.6f),
                 new Color(0.91f, 0.63f, 0.33f), -15);
@@ -423,7 +498,7 @@ namespace MythicPuzzle.Editor
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             var scaler = canvasObject.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1080f, 1920f);
+            scaler.referenceResolution = new Vector2(1170f, 2532f);
             scaler.matchWidthOrHeight = 0.5f;
 
             var level = UiText("Level", canvasObject.transform, new Vector2(0.06f, 0.91f), new Vector2(0.3f, 0.97f), 38);
