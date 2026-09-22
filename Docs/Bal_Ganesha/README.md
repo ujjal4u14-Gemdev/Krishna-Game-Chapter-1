@@ -21,6 +21,8 @@ This folder is the content source of truth for the Bal Ganesha adaptation. The o
 3. [`Bal_Ganesha_Level_Art_Tracker.csv`](Bal_Ganesha_Level_Art_Tracker.csv) — importable production tracker with one row per level.
 4. [`Scalable_Content_Pipeline_Audit.md`](Scalable_Content_Pipeline_Audit.md) — current-state audit, missing systems, acceptance gates and prioritized backlog.
 5. [`Content_Authoring_Contract.md`](Content_Authoring_Contract.md) — IDs, folders, asset ownership and handoff contract for art, animation, audio and level assembly.
+6. [`First_5_Levels_Art_Prompt_Pack.md`](First_5_Levels_Art_Prompt_Pack.md) — generation prompts, exact layer list, pivots and gameplay lock for Levels 1–5.
+7. [`First_5_Levels_Implementation_Guide.md`](First_5_Levels_Implementation_Guide.md) — build command, architecture, art binding and test steps for the first playable slice.
 
 ## Non-negotiable reuse rule
 

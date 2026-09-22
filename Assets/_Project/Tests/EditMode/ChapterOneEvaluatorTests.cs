@@ -59,11 +59,37 @@ namespace MythicPuzzle.Tests
                 Is.EqualTo(PuzzleEvaluation.Correct));
         }
 
+        [Test]
+        public void LevelArtSet_ResolvesBindingByStableSlotId()
+        {
+            var artSet = ScriptableObject.CreateInstance<LevelArtSet>();
+            try
+            {
+                SetField(artSet, "bindings", new List<LevelArtBinding>
+                {
+                    new LevelArtBinding { slotId = "INT_C01_001_Target", tint = Color.white }
+                });
+
+                Assert.That(artSet.TryGet("INT_C01_001_Target", out var binding), Is.True);
+                Assert.That(binding.slotId, Is.EqualTo("INT_C01_001_Target"));
+                Assert.That(artSet.TryGet("missing", out _), Is.False);
+            }
+            finally
+            {
+                Object.DestroyImmediate(artSet);
+            }
+        }
+
         private void Set<T>(string fieldName, T value)
         {
-            typeof(PuzzleDefinition)
+            SetField(definition, fieldName, value);
+        }
+
+        private static void SetField<TObject, TValue>(TObject target, string fieldName, TValue value)
+        {
+            typeof(TObject)
                 .GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)
-                ?.SetValue(definition, value);
+                ?.SetValue(target, value);
         }
     }
 }

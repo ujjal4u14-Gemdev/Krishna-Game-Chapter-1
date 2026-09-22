@@ -15,6 +15,14 @@ EXPECTED_COUNTS = {
     "AimAndShoot": 26,
 }
 
+FIRST_FIVE_TARGETS = {
+    1: "ENT_C01_001_Rope_Target",
+    2: "ENT_C01_002_Spill_Target",
+    3: "ENT_C01_003_CupboardDoor_Target",
+    4: "ENT_C01_004_LightWeight_Target",
+    5: "ENT_C01_005_LowerCover_Target",
+}
+
 
 def fail(message: str) -> None:
     print(f"ERROR: {message}", file=sys.stderr)
@@ -58,6 +66,18 @@ def main() -> int:
         for required in ("PuzzleFamily", "EnvironmentKit", "ArtObjective", "InteractiveTarget", "UniqueArtTier"):
             if not row[required].strip():
                 fail(f"Level {level}: {required} is empty")
+                errors += 1
+
+        if level in FIRST_FIVE_TARGETS:
+            expected_target = FIRST_FIVE_TARGETS[level]
+            if row["InteractiveTarget"] != expected_target:
+                fail(
+                    f"Level {level}: expected first-slice target {expected_target}, "
+                    f"found {row['InteractiveTarget']}"
+                )
+                errors += 1
+            if row["ConceptStatus"] != "Prompt Ready":
+                fail(f"Level {level}: expected ConceptStatus Prompt Ready")
                 errors += 1
 
     counts = Counter(row["PuzzleFamily"] for row in rows)

@@ -85,6 +85,17 @@ After the first Unity import finishes without compiler errors:
 
 The demo uses generated colored shapes and contains no final copyrighted artwork. It exists to verify the complete input, evaluation, reset, sequencing and completion pipeline before art production.
 
+## Build and play Levels 1–5
+
+After Unity finishes compiling:
+
+1. Run `Tools > Bal Ganesha Game > Build First 5 Playable Levels`.
+2. Unity generates five level scenes plus their level, puzzle, sequence and art-binding assets.
+3. Level 1 opens automatically. Set the Game view to `9:16`, press Play and rub the blue target.
+4. Use the completion panel to replay or continue through Level 5.
+
+The generated scenes use colored art slots and a reusable masked eraser. Replace visuals through each `ART_C01_00N` art set without changing gameplay IDs or code. See the [`Levels 1–5 art prompt pack`](Docs/Bal_Ganesha/First_5_Levels_Art_Prompt_Pack.md) and [`implementation guide`](Docs/Bal_Ganesha/First_5_Levels_Implementation_Guide.md).
+
 ## Rights note
 
 The walkthrough is used only as a gameplay-structure reference. Use artwork, music, character designs, trademarks and story text only when you own them or have permission. The Bal Ganesha story in this repository is an original family-game adaptation, not a claim of scriptural canon; complete cultural review before release.

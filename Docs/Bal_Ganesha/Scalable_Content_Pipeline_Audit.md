@@ -14,7 +14,7 @@ Complete the P0 gates below with the three-level vertical slice before commissio
 |---|---|---|---|
 | Puzzle reuse | Green | Three evaluator families cover 54 levels | Keep; no per-level scripts |
 | Code boundaries | Green | Runtime, UI, Editor and Tests assemblies; adapter interfaces | Keep dependency direction |
-| Level data | Amber | `LevelDefinition` and `PuzzleDefinition` exist | Add presentation metadata without polluting rule data |
+| Level data | Amber/Green | `LevelDefinition`, `PuzzleDefinition` and sprite-only `LevelArtSet` exist | Add localized story/audio/camera metadata without polluting rule data |
 | Scene references | Green/Amber | Stable `SceneEntity` IDs and duplicate checking | Add definition-to-scene cross-validation |
 | Sequencing | Amber | Data-driven intro/success/failure commands | Add cancellation, skip policy and missing-target diagnostics |
 | Save/progression | Amber | JSON store and progression service | Add atomic write, backup, schema version and migration |
@@ -23,7 +23,7 @@ Complete the P0 gates below with the three-level vertical slice before commissio
 | Asset loading | Red | Direct scene/assets; no Addressables policy | Add local Addressables groups before chapter scale-up |
 | Localization | Red | No string/asset tables | Use stable keys from the first final line of text |
 | Audio | Red | No catalog/mixer/import contract | Add mixer buses, event catalog and voice ownership |
-| Art import | Red | Folder intention only | Add texture/sprite/audio import presets and atlas policy |
+| Art import | Amber/Red | Stable `SpriteArtSlot` binding and single-sprite masked eraser are implemented | Add texture/sprite import presets and atlas policy |
 | Validation/CI | Amber | Editor validator and evaluator EditMode tests | Add repository content validation, Unity batch compile/tests |
 | Performance | Red | No device budget or captured profile | Lock low/mid target devices and profile builds on hardware |
 | Version control | Amber | Text rules and LFS for PSD/Spine | Extend LFS types; define branch/PR ownership and lock large sources |
@@ -34,7 +34,7 @@ Complete the P0 gates below with the three-level vertical slice before commissio
 
 ### 1. Presentation data separate from puzzle rules
 
-Create `LevelPresentationDefinition`/`PuzzlePresentationDefinition` assets or an equivalent catalog with:
+The first Levels 1–5 slice now separates sprite replacement through `LevelArtSet`, `LevelArtBinder` and stable `SpriteArtSlot` IDs. Complete that presentation layer with `LevelPresentationDefinition`/`PuzzlePresentationDefinition` assets or an equivalent catalog containing:
 
 - `storyTitleKey`, `objectiveKey`, `hintKey`, `successLineKey`
 - environment kit ID, cast IDs and camera preset ID
@@ -140,9 +140,9 @@ The current neutral `MythicPuzzle` runtime namespace is correct and should **not
 
 ## Immediate implementation order
 
-1. Apply this production pack and run the repository content validator.
-2. Approve the Bal Ganesha turnaround, five environment kits and prop replacement map.
-3. Add presentation definitions, localization keys, audio catalog and mixer.
+1. Generate and test the Levels 1–5 slice, then run the repository and Unity project validators.
+2. Approve the Bal Ganesha turnaround, Palace Store kit and Levels 1–5 prop replacement map.
+3. Complete presentation definitions, localization keys, audio catalog and mixer.
 4. Add Addressables local groups and explicit lifetime ownership.
 5. Build final-quality Levels 1, 6 and 15; test on Android.
 6. Freeze import/rig/sequence conventions, then batch-produce the remaining levels by kit.

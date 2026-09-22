@@ -10,7 +10,8 @@ This contract keeps story, art, audio and puzzle logic independently replaceable
 |---|---|---|
 | `LevelDefinition` | Stable level ID, number, scene/address, ordered puzzles | Dialogue text, sprite filenames, hardcoded character names |
 | `PuzzleDefinition` | Puzzle family, correct entity IDs, limits, sequence references | Scene object searches, UI layout, localized text |
-| Presentation data (planned P0) | Story/objective/hint keys, environment kit, cast, camera preset, music/ambience event IDs | Success rules |
+| `LevelArtSet` + art slots | Replaceable sprites keyed by stable visual slot IDs | Success rules or gameplay entity IDs |
+| Presentation data (remaining P0) | Story/objective/hint keys, environment kit, cast, camera preset, music/ambience event IDs | Success rules |
 | Scene/prefab | Visual composition, colliders, stable `SceneEntity` IDs | Deciding which answer is correct |
 | Sequence asset | Intro/success/failure actions | Puzzle evaluation |
 | Localization tables | Player-facing strings and voice subtitle text | Level numbers or entity IDs |
@@ -26,7 +27,7 @@ PZ_C01_001_RevealRibbon
 SCN_C01_PalaceStore
 KIT_ENV_PalaceStore
 CHR_GANESHA_CHILD
-ENT_C01_001_Ribbon_Target
+ENT_C01_001_Rope_Target
 SEQ_C01_001_Intro
 SEQ_C01_001_Success
 SEQ_C01_001_Fail_WrongSurface

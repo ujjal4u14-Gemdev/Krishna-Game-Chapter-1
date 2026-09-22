@@ -1,0 +1,79 @@
+# Levels 1–5 — Unity Implementation Guide
+
+## What is implemented
+
+The project can generate five independent portrait scenes, five `LevelDefinition` assets, five `PuzzleDefinition` assets, intro/success sequences, empty per-level `LevelArtSet` assets, reusable eraser-mask surfaces, HUD feedback, replay and next-level navigation.
+
+Use:
+
+```text
+Tools → Bal Ganesha Game → Build First 5 Playable Levels
+```
+
+The command opens Level 1 after generation and adds all five scenes to Build Settings.
+
+## Runtime separation
+
+```mermaid
+flowchart TD
+    A[LevelDefinition] --> B[PuzzleDirector]
+    C[PuzzleDefinition] --> B
+    B --> D[EraseRevealEvaluator]
+    E[TileEraseController] --> F[PuzzleInputRouter]
+    F --> B
+    B --> G[ActionSequenceRunner]
+    H[LevelArtSet] --> I[LevelArtBinder]
+    I --> J[SpriteArtSlot]
+```
+
+Gameplay correctness never depends on a sprite filename. Final artwork can change through `LevelArtSet` while the stable `SceneEntity` target IDs remain unchanged.
+
+## Generated content
+
+| Content | Folder |
+|---|---|
+| Scenes | `Assets/_Project/Scenes/Chapters/C01/` |
+| Level data | `Assets/_Project/Data/Levels/C01/` |
+| Puzzle data | `Assets/_Project/Data/Puzzles/C01/` |
+| Art binding data | `Assets/_Project/Data/Presentation/C01/` |
+| Sequences | `Assets/_Project/Data/Sequences/C01/` |
+
+## How to test the playable slice
+
+1. Open the project in Unity `6000.0.84f1`.
+2. Wait until the lower-right import spinner and Console compilation finish.
+3. Select **Tools → Bal Ganesha Game → Build First 5 Playable Levels**.
+4. Level 1 opens automatically.
+5. Set the Game window to a portrait aspect, ideally `9:16` or `1080 × 1920`.
+6. Press Play.
+7. Hold the left mouse button and rub across the blue target surface. On a phone, drag one finger.
+8. After success, press **Next Level**. Complete Levels 1–5 in order.
+9. Run **Tools → Bal Ganesha Game → Validate Project** and confirm zero errors.
+
+## How to install final art without code changes
+
+1. Import PNG exports into the matching `Assets/_Project/Art/.../Export` folder.
+2. Use Sprite (2D and UI), sRGB on, alpha transparency on, mipmaps off.
+3. Open the matching `ART_C01_00N` asset in `Assets/_Project/Data/Presentation/C01/`.
+4. Add a binding whose `slotId` exactly matches the prompt-pack slot.
+5. Assign the sprite. Use a white tint and leave `useNativeSize` off for full-scene slots unless the scene has been recomposed around the sprite's pixels-per-unit.
+6. Enter Play Mode. `LevelArtBinder` replaces the colored fallback while puzzle IDs, colliders and sequences stay unchanged.
+
+The interactive cover for each level is one full transparent PNG. The eraser uses a grid of `SpriteMask` cells, so the art does not need to be manually sliced.
+
+## Stable target IDs
+
+| Level | Correct eraser entity |
+|---|---|
+| 1 | `ENT_C01_001_Rope_Target` |
+| 2 | `ENT_C01_002_Spill_Target` |
+| 3 | `ENT_C01_003_CupboardDoor_Target` |
+| 4 | `ENT_C01_004_LightWeight_Target` |
+| 5 | `ENT_C01_005_LowerCover_Target` |
+
+Do not rename these IDs after art integration. Art-slot IDs may be rebound to new sprites; gameplay IDs are the save/test contract.
+
+## Current visual scope
+
+The generator creates colored, readable production greybox compositions—not final painted art. All five levels are playable end to end once the menu command has generated their Unity assets. Final character animation, sound events, localization tables and device performance tuning remain integration work after approved art arrives.
+

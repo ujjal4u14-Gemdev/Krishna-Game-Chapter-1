@@ -29,11 +29,27 @@ namespace MythicPuzzle.Editor
                 if (string.IsNullOrWhiteSpace(puzzle.PuzzleId)) Error(puzzle, "Puzzle ID is empty", ref errors);
                 else if (!knownPuzzleIds.Add(puzzle.PuzzleId)) Error(puzzle, $"Duplicate puzzle ID: {puzzle.PuzzleId}", ref errors);
 
-                var needsTarget = puzzle.PuzzleType == PuzzleType.BinaryChoice ||
+                var needsTarget = puzzle.PuzzleType == PuzzleType.EraseReveal ||
+                                  puzzle.PuzzleType == PuzzleType.BinaryChoice ||
                                   puzzle.PuzzleType == PuzzleType.AimAndShoot ||
                                   puzzle.PuzzleType == PuzzleType.TapSelect;
                 if (needsTarget && puzzle.CorrectEntityIds.Count == 0)
                     Error(puzzle, "Puzzle requires at least one correct entity ID", ref errors);
+            }
+
+            foreach (var artSet in LoadAssets<LevelArtSet>())
+            {
+                if (string.IsNullOrWhiteSpace(artSet.LevelId))
+                    Error(artSet, "Art set level ID is empty", ref errors);
+
+                var knownSlots = new HashSet<string>();
+                foreach (var binding in artSet.Bindings)
+                {
+                    if (string.IsNullOrWhiteSpace(binding.slotId))
+                        Error(artSet, "Art set contains an empty slot ID", ref errors);
+                    else if (!knownSlots.Add(binding.slotId))
+                        Error(artSet, $"Duplicate art slot ID: {binding.slotId}", ref errors);
+                }
             }
 
             var sceneIds = new HashSet<string>();
