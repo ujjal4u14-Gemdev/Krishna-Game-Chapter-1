@@ -47,7 +47,7 @@ namespace MythicPuzzle.Tests
         [Test]
         public void AimAndShoot_RejectsHazardAndAcceptsTarget()
         {
-            Set("correctEntityIds", new List<string> { "butter_pot" });
+            Set("correctEntityIds", new List<string> { "modak_jar" });
             var evaluator = new AimAndShootEvaluator();
             evaluator.Initialize(definition);
 
@@ -55,7 +55,7 @@ namespace MythicPuzzle.Tests
                 evaluator.Evaluate(new PuzzleInputSignal(PuzzleInputKind.ProjectileHit, "bell")),
                 Is.EqualTo(PuzzleEvaluation.Incorrect));
             Assert.That(
-                evaluator.Evaluate(new PuzzleInputSignal(PuzzleInputKind.ProjectileHit, "butter_pot")),
+                evaluator.Evaluate(new PuzzleInputSignal(PuzzleInputKind.ProjectileHit, "modak_jar")),
                 Is.EqualTo(PuzzleEvaluation.Correct));
         }
 

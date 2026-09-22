@@ -4,7 +4,7 @@ Build Levels 1, 6 and 15 before producing the remaining content. They prove ever
 
 ## Bootstrap scene
 
-After the first Unity import, run `Tools > Krishna Game > Setup Project`. It creates the standard folders, a Bootstrap scene, a GameplayTemplate scene and their Build Settings entries. The Bootstrap scene contains:
+After the first Unity import, run `Tools > Bal Ganesha Game > Setup Project`. It creates the standard folders, a Bootstrap scene, a GameplayTemplate scene and their Build Settings entries. The Bootstrap scene contains:
 
 - `JsonProgressStore`
 - `LevelSceneLoader`
@@ -61,4 +61,4 @@ For every level create:
 - a thumbnail and localization key set
 - one happy-path test and one failure/reset test in the Unity scene
 
-Before committing a level, run `Tools > Krishna Game > Validate Project`. It checks duplicate/empty IDs, missing puzzle targets, empty levels and open-scene entity IDs.
+Before committing a level, run `Tools > Bal Ganesha Game > Validate Project`. It checks duplicate/empty IDs, missing puzzle targets, empty levels and open-scene entity IDs.

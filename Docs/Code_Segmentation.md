@@ -124,7 +124,7 @@ Core never references UI, a puzzle category, Spine, DOTween, analytics, ads or s
 
 Bad reusable class name:
 
-`GiveFluteToKrishnaPuzzle`
+`GiveModakToGaneshaPuzzle`
 
 Correct reusable class name:
 
@@ -133,8 +133,8 @@ Correct reusable class name:
 The story-specific entities belong only in a `PuzzleDefinition`:
 
 ```text
-Source: ENT_Flute
-Destination: ENT_Krishna_Hand
-Success sequence: SEQ_KrishnaReceivesFlute
-Failure sequence: SEQ_MonkeyStealsFlute
+Source: ENT_Modak
+Destination: ENT_Ganesha_Hand
+Success sequence: SEQ_GaneshaReceivesModak
+Failure sequence: SEQ_MushikaTakesModak
 ```

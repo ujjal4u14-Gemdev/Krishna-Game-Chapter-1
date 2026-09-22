@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ namespace MythicPuzzle.Editor
         private const string DemoRoot = "Assets/_Project/Content/Samples/GreyboxDemo";
         private const string ScenePath = "Assets/_Project/Scenes/Samples/PlayableGreyboxDemo.unity";
 
-        [MenuItem("Tools/Krishna Game/Create Playable Greybox Demo")]
+        [MenuItem("Tools/Bal Ganesha Game/Create Playable Greybox Demo")]
         public static void CreateDemo()
         {
             Directory.CreateDirectory(DemoRoot);
@@ -88,7 +89,7 @@ namespace MythicPuzzle.Editor
             var aim = Asset<PuzzleDefinition>("PZ_Demo_03_Aim");
             Set(aim, "puzzleId", "demo_aim");
             Set(aim, "puzzleType", (int)PuzzleType.AimAndShoot);
-            SetStrings(aim, "correctEntityIds", "butter_pot");
+            SetStrings(aim, "correctEntityIds", "modak_jar");
             Set(aim, "introSequence", sequences["aimIntro"]);
             Set(aim, "successSequence", sequences["aimSuccess"]);
             Set(aim, "failureSequence", sequences["failure"]);
@@ -136,6 +137,7 @@ namespace MythicPuzzle.Editor
             var camera = cameraObject.GetComponent<Camera>();
             camera.orthographic = true;
             camera.orthographicSize = 5.4f;
+            camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.06f, 0.08f, 0.13f);
 
             var systems = new GameObject("Gameplay Systems");
@@ -156,7 +158,7 @@ namespace MythicPuzzle.Editor
             CreateCompleteGroup(content.transform);
             CreateUi(director);
 
-            var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+            var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
             eventSystem.transform.SetAsLastSibling();
             EditorSceneManager.SaveScene(scene, ScenePath);
         }
@@ -164,8 +166,8 @@ namespace MythicPuzzle.Editor
         private static void CreateErasePuzzle(Transform parent, PuzzleInputRouter router, PuzzleDirector director, Camera camera)
         {
             var group = Entity("Erase Puzzle", "erase_group", parent);
-            var hidden = Solid("Hidden Butter", group.transform, new Vector3(0f, 0f, 0f), new Vector2(3.4f, 2.3f), new Color(1f, 0.68f, 0.08f), 0);
-            Label("BUTTER REVEALED", hidden.transform, Vector3.zero, 0.18f);
+            var hidden = Solid("Hidden Modaks", group.transform, new Vector3(0f, 0f, 0f), new Vector2(3.4f, 2.3f), new Color(1f, 0.68f, 0.08f), 0);
+            Label("BUTTER REVEALED", hidden.transform, Vector3.zero, 0.12f, 1);
 
             var mask = Entity("Erasable Mask", "rope_mask", group.transform);
             mask.AddComponent<BoxCollider2D>().size = new Vector2(5.2f, 4.2f);
@@ -174,6 +176,7 @@ namespace MythicPuzzle.Editor
             Set(controller, "puzzleDirector", director);
             Set(controller, "worldCamera", camera);
             Set(controller, "brushRadius", 0.48f);
+            Set(controller, "useDirectPointerInput", true);
 
             for (var row = 0; row < 5; row++)
             for (var column = 0; column < 7; column++)
@@ -194,12 +197,12 @@ namespace MythicPuzzle.Editor
             var safe = Solid("Safe Route", group.transform, new Vector3(-1.35f, 0f, 0f), new Vector2(2.1f, 3.2f),
                 new Color(0.15f, 0.72f, 0.32f), 1);
             Target(safe, "safe_route", router);
-            Label("SAFE", safe.transform, Vector3.zero, 0.23f);
+            Label("SAFE", safe.transform, Vector3.zero, 0.16f);
 
             var danger = Solid("Danger Route", group.transform, new Vector3(1.35f, 0f, 0f), new Vector2(2.1f, 3.2f),
                 new Color(0.82f, 0.2f, 0.18f), 1);
             Target(danger, "danger_route", router);
-            Label("DANGER", danger.transform, Vector3.zero, 0.23f);
+            Label("DANGER", danger.transform, Vector3.zero, 0.16f);
         }
 
         private static void CreateAimPuzzle(Transform parent, PuzzleInputRouter router, PuzzleDirector director,
@@ -229,8 +232,9 @@ namespace MythicPuzzle.Editor
             Set(controller, "projectilePrefab", projectilePrefab);
             Set(controller, "trajectoryLine", line);
             Set(controller, "launchPower", 3.5f);
+            Set(controller, "useDirectPointerInput", true);
 
-            CreateProjectileTarget(group.transform, "Butter Pot", "butter_pot", new Vector3(1.35f, 1.7f, 0f),
+            CreateProjectileTarget(group.transform, "Modak Jar", "modak_jar", new Vector3(1.35f, 1.7f, 0f),
                 new Vector2(1.15f, 1.15f), new Color(1f, 0.68f, 0.08f), "POT");
             CreateProjectileTarget(group.transform, "Hazard", "bell_hazard", new Vector3(-1.2f, 0.6f, 0f),
                 new Vector2(1.1f, 1.1f), new Color(0.85f, 0.2f, 0.2f), "X");
@@ -241,7 +245,7 @@ namespace MythicPuzzle.Editor
             var group = Entity("Complete Group", "complete_group", parent);
             Solid("Celebration", group.transform, Vector3.zero, new Vector2(5.2f, 3.2f),
                 new Color(0.14f, 0.55f, 0.35f), 0);
-            Label("DEMO COMPLETE!", group.transform, Vector3.zero, 0.25f);
+            Label("DEMO COMPLETE!", group.transform, Vector3.zero, 0.18f);
         }
 
         private static void CreateUi(PuzzleDirector director)
@@ -300,7 +304,8 @@ namespace MythicPuzzle.Editor
             return gameObject;
         }
 
-        private static void Label(string value, Transform parent, Vector3 position, float characterSize)
+        private static void Label(string value, Transform parent, Vector3 position, float characterSize,
+            int sortingOrder = 4)
         {
             var label = new GameObject($"Label {value}", typeof(TextMesh));
             label.transform.SetParent(parent, false);
@@ -313,7 +318,7 @@ namespace MythicPuzzle.Editor
             text.characterSize = characterSize;
             text.fontSize = 48;
             text.color = Color.white;
-            text.GetComponent<MeshRenderer>().sortingOrder = 4;
+            text.GetComponent<MeshRenderer>().sortingOrder = sortingOrder;
         }
 
         private static void Target(GameObject gameObject, string id, PuzzleInputRouter router)
@@ -323,6 +328,7 @@ namespace MythicPuzzle.Editor
             Set(entity, "entityId", id);
             var target = gameObject.AddComponent<PuzzleTapTarget>();
             Set(target, "inputRouter", router);
+            Set(target, "useDirectPointerInput", true);
         }
 
         private static void CreateProjectileTarget(Transform parent, string name, string id, Vector3 position,
@@ -333,7 +339,7 @@ namespace MythicPuzzle.Editor
             var entity = gameObject.AddComponent<SceneEntity>();
             Set(entity, "entityId", id);
             gameObject.AddComponent<ProjectileTarget>();
-            Label(label, gameObject.transform, Vector3.zero, 0.25f);
+            Label(label, gameObject.transform, Vector3.zero, 0.16f);
         }
 
         private static ActionSequenceAsset Sequence(string name, params ActionStep[] steps)
@@ -418,6 +424,14 @@ namespace MythicPuzzle.Editor
         {
             var serialized = new SerializedObject(target);
             serialized.FindProperty(property).floatValue = value;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(target);
+        }
+
+        private static void Set(Object target, string property, bool value)
+        {
+            var serialized = new SerializedObject(target);
+            serialized.FindProperty(property).boolValue = value;
             serialized.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(target);
         }

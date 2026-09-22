@@ -1,7 +1,9 @@
 {
   "name": "MythicPuzzle.Runtime",
   "rootNamespace": "MythicPuzzle.Runtime",
-  "references": [],
+  "references": [
+    "Unity.InputSystem"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

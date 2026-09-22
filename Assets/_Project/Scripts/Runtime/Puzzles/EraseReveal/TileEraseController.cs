@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace MythicPuzzle.Runtime
 {
@@ -18,6 +19,7 @@ namespace MythicPuzzle.Runtime
         [SerializeField] private LayerMask erasableLayers = ~0;
         [SerializeField, Min(0.01f)] private float brushRadius = 0.2f;
         [SerializeField] private List<ErasableTile> tiles = new();
+        [SerializeField] private bool useDirectPointerInput;
 
         private readonly HashSet<ErasableTile> erasedTiles = new();
         private SceneEntity sceneEntity;
@@ -41,19 +43,33 @@ namespace MythicPuzzle.Runtime
             strokeActive = false;
         }
 
+        private void Update()
+        {
+            if (!useDirectPointerInput || !CanInteract()) return;
+            var pointer = Pointer.current;
+            if (pointer == null) return;
+
+            if (pointer.press.wasPressedThisFrame) strokeActive = true;
+            if (strokeActive && pointer.press.isPressed) EraseAt(pointer.position.ReadValue());
+            if (pointer.press.wasReleasedThisFrame) strokeActive = false;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (puzzleDirector != null && puzzleDirector.State != PuzzleState.AwaitingInput) return;
+            if (useDirectPointerInput || !CanInteract()) return;
             strokeActive = true;
             EraseAt(eventData.position);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (strokeActive) EraseAt(eventData.position);
+            if (!useDirectPointerInput && strokeActive) EraseAt(eventData.position);
         }
 
-        public void OnPointerUp(PointerEventData eventData) => strokeActive = false;
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (!useDirectPointerInput) strokeActive = false;
+        }
 
         public void ResetTiles()
         {
@@ -95,5 +111,8 @@ namespace MythicPuzzle.Runtime
         {
             if (state == PuzzleState.Resetting) ResetTiles();
         }
+
+        private bool CanInteract() =>
+            puzzleDirector == null || puzzleDirector.State == PuzzleState.AwaitingInput;
     }
 }

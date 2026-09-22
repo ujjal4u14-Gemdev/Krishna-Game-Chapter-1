@@ -7,7 +7,7 @@ namespace MythicPuzzle.Editor
 {
     public static class ProjectValidator
     {
-        [MenuItem("Tools/Krishna Game/Validate Project")]
+        [MenuItem("Tools/Bal Ganesha Game/Validate Project")]
         public static void ValidateProject()
         {
             var errors = 0;
@@ -43,7 +43,7 @@ namespace MythicPuzzle.Editor
                 else if (!sceneIds.Add(entity.EntityId)) Error(entity, $"Duplicate scene entity ID: {entity.EntityId}", ref errors);
             }
 
-            var message = $"Krishna Game validation finished: {errors} error(s), {warnings} warning(s).";
+            var message = $"Bal Ganesha Game validation finished: {errors} error(s), {warnings} warning(s).";
             if (errors == 0) Debug.Log(message); else Debug.LogError(message);
         }
 

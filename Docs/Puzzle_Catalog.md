@@ -11,7 +11,7 @@ The complete framework recognizes 18 puzzle templates. The first eight are suffi
 | 3 | Drag & Drop | Drag source to destination | Give flute, place bridge stone, feed animal |
 | 4 | Sequence Order | Tap items in order | Musical notes, stepping stones, ritual sequence |
 | 5 | Swipe Direction | Swipe correctly | Dodge branch, move cloud, redirect projectile |
-| 6 | Hidden Object | Reveal and select | Krishna behind curtain, object in bushes, hidden key |
+| 6 | Hidden Object | Reveal and select | Modak jar behind curtain, object in bushes, hidden key |
 | 7 | Match Pairs | Pair related objects | Shadow matching, tool to owner, animal to food |
 | 8 | Route Choice | Pick or build a path | Escape maze, cross river, guide cows home |
 
@@ -54,4 +54,3 @@ Every puzzle template needs:
 8. Route Choice
 
 Timing, tracing, physics and battle mechanics should wait until the core content pipeline is proven.
-

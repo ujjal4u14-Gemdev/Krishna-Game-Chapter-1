@@ -19,7 +19,7 @@ namespace MythicPuzzle.Editor
             "Scenes/Bootstrap", "Scenes/Templates", "Scenes/Chapter01"
         };
 
-        [MenuItem("Tools/Krishna Game/Setup Project")]
+        [MenuItem("Tools/Bal Ganesha Game/Setup Project")]
         public static void SetupProject()
         {
             foreach (var folder in Folders) Directory.CreateDirectory(Path.Combine(Root, folder));
@@ -31,7 +31,7 @@ namespace MythicPuzzle.Editor
             CreateGameplayTemplate(templatePath);
             AddScenesToBuildSettings(bootstrapPath, templatePath);
             AssetDatabase.SaveAssets();
-            Debug.Log("Krishna Game setup complete. Open GameplayTemplate and assign a LevelDefinition to PuzzleDirector.");
+            Debug.Log("Bal Ganesha Game setup complete. Open GameplayTemplate and assign a LevelDefinition to PuzzleDirector.");
         }
 
         private static void CreateBootstrapScene(string path)

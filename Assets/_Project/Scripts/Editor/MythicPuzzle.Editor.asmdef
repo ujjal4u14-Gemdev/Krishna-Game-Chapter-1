@@ -3,7 +3,8 @@
   "rootNamespace": "MythicPuzzle.Editor",
   "references": [
     "MythicPuzzle.Runtime",
-    "MythicPuzzle.UI"
+    "MythicPuzzle.UI",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [
     "Editor"

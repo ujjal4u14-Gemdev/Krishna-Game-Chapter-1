@@ -1,11 +1,11 @@
 {
-  "levelId": "LVL_C01_001_FindButter",
-  "sceneName": "SCN_C01_VillageCourtyard",
+  "levelId": "LVL_C01_001_RevealModaks",
+  "sceneName": "SCN_C01_PalaceStore",
   "puzzles": [
     {
-      "puzzleId": "PZ_C01_001_SelectPot",
-      "puzzleType": "TapSelect",
-      "correctEntityIds": ["ENT_ButterPot_Correct"],
+      "puzzleId": "PZ_C01_001_RevealRibbon",
+      "puzzleType": "EraseReveal",
+      "correctEntityIds": ["ENT_Ribbon_Target"],
       "maxAttempts": 0,
       "resetAfterFailure": true,
       "introSequence": "SEQ_C01_001_Intro",
@@ -15,4 +15,3 @@
   ],
   "completionSequence": "SEQ_C01_001_LevelComplete"
 }
-

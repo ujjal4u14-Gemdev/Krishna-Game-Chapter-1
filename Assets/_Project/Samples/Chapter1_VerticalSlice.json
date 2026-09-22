@@ -20,7 +20,7 @@
     {
       "levelId": "chapter01_level015",
       "puzzleType": "AimAndShoot",
-      "correctEntityIds": ["butter_pot_target"],
+      "correctEntityIds": ["modak_jar_target"],
       "introSequence": "SEQ_L015_Intro",
       "successSequence": "SEQ_L015_Success",
       "failureSequence": "SEQ_L015_Failure"

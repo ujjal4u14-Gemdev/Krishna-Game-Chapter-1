@@ -1,4 +1,3 @@
 chapter,level_id,story_goal,puzzle_type,correct_entities,wrong_entities,intro_sequence,success_sequence,failure_sequence,hint,unique_art,unique_animation,status
-1,LVL_C01_001,Find the correct butter pot,TapSelect,ENT_ButterPot_Correct,"ENT_ButterPot_Decoy_A|ENT_ButterPot_Decoy_B",SEQ_C01_001_Intro,SEQ_C01_001_Success,SEQ_C01_001_Fail,Shake the correct pot,Background and three pots,None,Planned
-1,LVL_C01_002,Give the flute to Krishna,DragDrop,ENT_Flute>ENT_Krishna,ENT_Flute>ENT_Monkey,SEQ_C01_002_Intro,SEQ_C01_002_Success,SEQ_C01_002_Fail,Glow Krishna's hand,Flute prop,Reusable receive animation,Planned
-
+1,LVL_C01_001,Reveal the modak jar,EraseReveal,ENT_Ribbon_Target,ENT_Ribbon_Decoy,SEQ_C01_001_Intro,SEQ_C01_001_Success,SEQ_C01_001_Fail,Glow the correct ribbon,Palace store and hanging jar,Ribbon dissolve,Planned
+1,LVL_C01_002,Clear baskets to reach the serving jar,EraseReveal,ENT_BasketPile_Target,ENT_BasketPile_Decoy,SEQ_C01_002_Intro,SEQ_C01_002_Success,SEQ_C01_002_Fail,Glow the correct basket pile,Palace store and serving jar,Reusable collect animation,Planned

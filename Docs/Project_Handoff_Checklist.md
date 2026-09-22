@@ -53,7 +53,7 @@ Adapters keep these outside the puzzle framework.
 
 ## Next content milestone
 
-1. Run `Tools > Krishna Game > Setup Project` after Unity imports the repository.
+1. Run `Tools > Bal Ganesha Game > Setup Project` after Unity imports the repository.
 2. Greybox Levels 1, 6 and 15 using `Docs/Vertical_Slice_Setup.md`.
 3. Add licensed/original character, environment, UI and audio assets.
 4. Validate on the target Android device, including safe area and memory use.

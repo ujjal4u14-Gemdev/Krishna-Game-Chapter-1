@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace MythicPuzzle.Runtime
 {
@@ -16,6 +17,7 @@ namespace MythicPuzzle.Runtime
         [SerializeField, Min(0.1f)] private float maxDragWorldUnits = 3f;
         [SerializeField, Range(4, 40)] private int previewPointCount = 18;
         [SerializeField, Min(0.01f)] private float previewTimeStep = 0.08f;
+        [SerializeField] private bool useDirectPointerInput;
 
         private bool aiming;
         private bool shotInFlight;
@@ -39,23 +41,44 @@ namespace MythicPuzzle.Runtime
             SetTrajectoryVisible(false);
         }
 
+        private void Update()
+        {
+            if (!useDirectPointerInput) return;
+            var pointer = Pointer.current;
+            if (pointer == null) return;
+            var position = pointer.position.ReadValue();
+
+            if (pointer.press.wasPressedThisFrame) BeginAim(position);
+            if (aiming && pointer.press.isPressed) UpdateAim(position);
+            if (pointer.press.wasReleasedThisFrame) ReleaseShot(position);
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!CanInteract() || shotInFlight || worldCamera == null || launchPoint == null) return;
-            aiming = true;
-            UpdateAim(eventData.position);
+            if (!useDirectPointerInput) BeginAim(eventData.position);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (aiming) UpdateAim(eventData.position);
+            if (!useDirectPointerInput && aiming) UpdateAim(eventData.position);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!aiming) return;
+            if (!useDirectPointerInput) ReleaseShot(eventData.position);
+        }
 
-            UpdateAim(eventData.position);
+        private void BeginAim(Vector2 screenPosition)
+        {
+            if (!CanInteract() || shotInFlight || worldCamera == null || launchPoint == null) return;
+            aiming = true;
+            UpdateAim(screenPosition);
+        }
+
+        private void ReleaseShot(Vector2 screenPosition)
+        {
+            if (!aiming) return;
+            UpdateAim(screenPosition);
             aiming = false;
             SetTrajectoryVisible(false);
 

@@ -1,0 +1,14 @@
+name: Content validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-bal-ganesha-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate the locked Chapter 1 level tracker
+        run: python3 Tools/validate_bal_ganesha_content.py

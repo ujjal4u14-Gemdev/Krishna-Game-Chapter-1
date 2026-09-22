@@ -12,9 +12,9 @@ namespace MythicPuzzle.UI
 
         private static readonly string[] Instructions =
         {
-            "PUZZLE 1/3 — ERASE\nDrag across the blue tiles to reveal the butter.",
+            "PUZZLE 1/3 — ERASE\nDrag across the blue tiles to reveal the modaks.",
             "PUZZLE 2/3 — CHOICE\nClick the GREEN safe route.",
-            "PUZZLE 3/3 — AIM & SHOOT\nDrag backward from the launcher, then release. Hit the GOLD pot."
+            "PUZZLE 3/3 — AIM & SHOOT\nDrag backward from the launcher, then release. Hit the GOLD modak jar."
         };
 
         private void OnEnable()

@@ -4,7 +4,7 @@
 
 Write one sentence for each beat:
 
-> Krishna must obtain the hanging butter pot by choosing the safe tool.
+> Bal Ganesha must release the hanging modak jar by choosing the safe tool.
 
 Define the correct action, one or two plausible failures, and the visual payoff before creating art.
 
@@ -67,17 +67,16 @@ Use the cheapest technique that communicates the action:
 ## Naming
 
 ```text
-LVL_C01_001_FindButter
-PZ_C01_001_SelectPot
+LVL_C01_001_RevealModaks
+PZ_C01_001_RevealRibbon
 SEQ_C01_001_Intro
 SEQ_C01_001_Success
 SEQ_C01_001_Fail_WrongPot
-ENT_Krishna
-ENT_ButterPot_Correct
-ENT_ButterPot_Decoy_A
+ENT_Ganesha
+ENT_ModakJar_Correct
+ENT_ModakJar_Decoy_A
 ```
 
 ## Definition of done
 
 A level is not complete when its success animation works. It is complete when intro, interaction, wrong answer, reset, hint, success, transition, safe-area layout and low-end Android performance have all been verified.
-

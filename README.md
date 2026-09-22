@@ -1,18 +1,18 @@
-# Krishna Game — Chapter 1
+# Bal Ganesha — Chapter 1
 
-Unity 6 portrait-mobile foundation for recreating the 54-level walkthrough supplied for *Krishna Stories*. This repository starts with the reusable engine and production plan; original game artwork and audio are intentionally not included.
+Unity 6 portrait-mobile foundation for **Bal Ganesha and the Festival of Wisdom**. It preserves the 54-level puzzle structure verified from the supplied reference walkthrough while replacing its story, cast, environments, dialogue, art and audio with an original Bal Ganesha adaptation. Reference-game artwork and audio are intentionally not included.
 
-## Scope confirmed from the walkthrough
+## Bal Ganesha production scope
 
-- 54 requested levels across two in-app story cards
-- Story 1, **Collect Makhan**: Levels 1–25
-- Story 2, **Aghasura's Cave**: Levels 26–54
+- 54 levels across two story arcs
+- Arc 1, **The Missing Modaks**: Levels 1–25
+- Arc 2, **The Shadow Naga Cave**: Levels 26–54
 - Three reusable gameplay families cover the full chapter:
   - Erase / Reveal — 13 levels
   - Binary Choice / Route — 15 levels
   - Aim & Shoot — 26 levels
 
-The authoritative level-by-level production matrix is in [`Docs/Chapter_1_Level_Matrix.md`](Docs/Chapter_1_Level_Matrix.md).
+Start with the [`Bal Ganesha production pack`](Docs/Bal_Ganesha/README.md). The original [`reference level matrix`](Docs/Chapter_1_Level_Matrix.md) remains only as mechanical evidence.
 
 ## Engine lock
 
@@ -32,8 +32,8 @@ The starter code contains no required third-party dependency. It can compile usi
 
 The same Drag & Drop puzzle can become:
 
-- Put butter in Krishna's hand
-- Put the flute into the correct silhouette
+- Put a modak in Ganesha's hand
+- Put a festival ornament into the correct silhouette
 - Give food to the correct animal
 - Place stones to complete a bridge
 - Match a weapon to the correct character
@@ -67,7 +67,7 @@ Only the configuration and artwork change.
 1. Install Unity `6000.0.84f1` or a compatible Unity 6000.0 LTS patch.
 2. Clone this repository and open its root in Unity Hub.
 3. Allow Unity Package Manager to restore packages.
-4. Run `Tools > Krishna Game > Setup Project` once scripts compile.
+4. Run `Tools > Bal Ganesha Game > Setup Project` once scripts compile.
 5. Open the generated GameplayTemplate and follow `Docs/Vertical_Slice_Setup.md` for Levels 1, 6 and 15.
 
 ## Recommended first vertical slice
@@ -78,7 +78,7 @@ Build Levels 1, 6 and 15 first. Together they validate every Chapter 1 mechanic.
 
 After the first Unity import finishes without compiler errors:
 
-1. Run `Tools > Krishna Game > Create Playable Greybox Demo`.
+1. Run `Tools > Bal Ganesha Game > Create Playable Greybox Demo`.
 2. Unity creates and opens `Assets/_Project/Scenes/Samples/PlayableGreyboxDemo.unity`.
 3. Press Play.
 4. Complete Erase/Reveal, Binary Choice and Aim & Shoot in sequence.
@@ -87,4 +87,4 @@ The demo uses generated colored shapes and contains no final copyrighted artwork
 
 ## Rights note
 
-The walkthrough is used as a gameplay reference. Use artwork, music, character designs, trademarks and story text only when you own them or have permission. The framework deliberately keeps content separate so licensed or original replacement art can be used without changing puzzle logic.
+The walkthrough is used only as a gameplay-structure reference. Use artwork, music, character designs, trademarks and story text only when you own them or have permission. The Bal Ganesha story in this repository is an original family-game adaptation, not a claim of scriptural canon; complete cultural review before release.
