@@ -22,8 +22,8 @@ MonoBehaviour:
   - type: 2
     entityId: jar_hanging
     stringValue: 
-    vectorValue: {x: 1.55, y: -1.8, z: 0}
-    duration: 0.55
+    vectorValue: {x: 1.48, y: -2.45, z: 0}
+    duration: 0.62
     boolValue: 0
   - type: 1
     entityId: jar_hanging
@@ -37,3 +37,9 @@ MonoBehaviour:
     vectorValue: {x: 0, y: 0, z: 0}
     duration: 0
     boolValue: 1
+  - type: 2
+    entityId: ganesha_actor
+    stringValue: 
+    vectorValue: {x: -0.15, y: -2.45, z: 0}
+    duration: 0.7
+    boolValue: 0

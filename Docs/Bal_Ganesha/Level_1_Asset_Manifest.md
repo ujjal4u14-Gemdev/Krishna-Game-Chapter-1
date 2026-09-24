@@ -1,5 +1,7 @@
 # Level 1 — generated asset manifest
 
+> Historical courtyard iteration. The approved interior implementation is documented in `Level_1_Interior_Sequence.md` and is now the one bound in the playable Level 1 scene.
+
 The Level 1 visuals were generated in built-in ImageGen mode, then imported as independent Unity sprites. The user's `Ganesha.png` supplied the style and character identity reference. The first-five-level video supplied mechanics only; its art was not reproduced.
 
 | Slot | Project asset | Export | Use |

@@ -24,8 +24,13 @@ namespace MythicPuzzle.Editor
         private const string GaneshaCrawlPath =
             "Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Crawl.png";
         private const string LevelOneBackgroundPath =
-            "Assets/_Project/Art/Environments/C01/BG_C01_001_Courtyard.png";
+            "Assets/_Project/Art/Environments/C01/BG_C01_001_Interior_v2.png";
         private const string LevelOnePropsRoot = "Assets/_Project/Art/Props/C01";
+        private const string LevelOneCrawlPath =
+            "Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Crawl_Interior_v2.png";
+        private const string LevelOneHappyPath =
+            "Assets/_Project/Art/Characters/CHR_GANESHA_CHILD/Export/CHR_Ganesha_Happy_Modak_v2.png";
+        private const string LevelOneEraserPath = "Assets/_Project/Art/UI/UI_Eraser_Tutorial_v2.png";
         private const float PortraitWorldWidth = 6.1f;
         private const float PortraitWorldHeight = PortraitWorldWidth * 2532f / 1170f;
 
@@ -116,6 +121,24 @@ namespace MythicPuzzle.Editor
             Debug.Log("Portrait art applied to Levels 1-5 at 1170 x 2532; Level 1 art bound.");
         }
 
+        [MenuItem("Tools/Bal Ganesha Game/Build Level 1 Interior Sequence")]
+        public static void BuildLevelOneInteriorSequence()
+        {
+            EnsureFolders();
+            EnsureLevelOneSpriteImports();
+            var spec = Specs()[0];
+            var intro = CreateIntroSequence(spec);
+            var success = CreateSuccessSequence(spec);
+            var puzzle = CreatePuzzle(spec, intro, success);
+            var level = CreateLevel(spec, puzzle);
+            var artSet = CreateArtSet(spec);
+            CreateScene(spec, level, artSet);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorSceneManager.OpenScene(ScenePath(1));
+            Debug.Log("Level 1 interior art and cinematic sequence built.");
+        }
+
         private static List<LevelSpec> Specs() => new()
         {
             new LevelSpec
@@ -125,8 +148,8 @@ namespace MythicPuzzle.Editor
                 Objective = "Rub the rope until it breaks and the hanging jar drops.",
                 TargetId = "ENT_C01_001_Rope_Target",
                 NextScene = SceneName(2),
-                SurfacePosition = new Vector3(1.65f, 1.65f),
-                SurfaceSize = new Vector2(0.42f, 2.5f),
+                SurfacePosition = new Vector3(1.48f, 4.02f),
+                SurfaceSize = new Vector2(0.48f, 3.2f),
                 Columns = 1,
                 Rows = 8
             },
@@ -195,9 +218,10 @@ namespace MythicPuzzle.Editor
                 case 1:
                     return Sequence(name,
                         Step(ActionStepType.Wait, duration: 0.15f),
-                        Step(ActionStepType.MoveTo, "jar_hanging", new Vector3(1.55f, -1.8f), 0.55f),
+                        Step(ActionStepType.MoveTo, "jar_hanging", new Vector3(1.48f, -2.45f), 0.62f),
                         Step(ActionStepType.SetActive, "jar_hanging", boolValue: false),
-                        Step(ActionStepType.SetActive, "level_complete_visual", boolValue: true));
+                        Step(ActionStepType.SetActive, "level_complete_visual", boolValue: true),
+                        Step(ActionStepType.MoveTo, "ganesha_actor", new Vector3(-0.15f, -2.45f), 0.7f));
                 case 2:
                     return Sequence(name,
                         Step(ActionStepType.MoveTo, "ganesha_actor", new Vector3(1.25f, -2.15f), 0.75f),
@@ -248,13 +272,17 @@ namespace MythicPuzzle.Editor
         {
             var artSet = Asset<LevelArtSet>($"{DataRoot}/Presentation/C01/ART_C01_{spec.Number:000}.asset");
             Set(artSet, "levelId", $"LVL_C01_{spec.Number:000}");
-            var crawl = AssetDatabase.LoadAssetAtPath<Sprite>(GaneshaCrawlPath);
+            var crawl = AssetDatabase.LoadAssetAtPath<Sprite>(spec.Number == 1 ? LevelOneCrawlPath : GaneshaCrawlPath);
             if (crawl != null) EnsureBinding(artSet, "CHR_Ganesha_Crawl", crawl);
             if (spec.Number == 1)
             {
                 BindSprite(artSet, "BG_Far", LevelOneBackgroundPath);
-                foreach (var slot in new[] { "INT_C01_001_Target", "PROP_Jar_Hanging", "PROP_Jar_Broken", "PROP_Modaks_Pile" })
-                    BindSprite(artSet, slot, $"{LevelOnePropsRoot}/{slot}.png");
+                BindSprite(artSet, "INT_C01_001_Target", $"{LevelOnePropsRoot}/INT_C01_001_Rope_Interior_v2.png");
+                BindSprite(artSet, "PROP_Jar_Hanging", $"{LevelOnePropsRoot}/PROP_Jar_Hanging_Interior_v2.png");
+                BindSprite(artSet, "PROP_Jar_Broken", $"{LevelOnePropsRoot}/PROP_Jar_Broken_Interior_v2.png");
+                BindSprite(artSet, "PROP_Modaks_Pile", $"{LevelOnePropsRoot}/PROP_Modaks_Pile_Interior_v2.png");
+                BindSprite(artSet, "CHR_Ganesha_Happy_Modak", LevelOneHappyPath);
+                BindSprite(artSet, "UI_Eraser_Tutorial", LevelOneEraserPath);
             }
             return artSet;
         }
@@ -269,8 +297,12 @@ namespace MythicPuzzle.Editor
         private static void EnsureLevelOneSpriteImports()
         {
             EnsureSpriteImport(LevelOneBackgroundPath);
-            foreach (var slot in new[] { "INT_C01_001_Target", "PROP_Jar_Hanging", "PROP_Jar_Broken", "PROP_Modaks_Pile" })
-                EnsureSpriteImport($"{LevelOnePropsRoot}/{slot}.png");
+            EnsureSpriteImport(LevelOneCrawlPath);
+            EnsureSpriteImport(LevelOneHappyPath);
+            EnsureSpriteImport(LevelOneEraserPath);
+            foreach (var filename in new[] { "INT_C01_001_Rope_Interior_v2", "PROP_Jar_Hanging_Interior_v2",
+                         "PROP_Jar_Broken_Interior_v2", "PROP_Modaks_Pile_Interior_v2" })
+                EnsureSpriteImport($"{LevelOnePropsRoot}/{filename}.png");
         }
 
         private static void EnsureSpriteImport(string path)
@@ -296,7 +328,12 @@ namespace MythicPuzzle.Editor
             var bindings = serialized.FindProperty("bindings");
             for (var i = 0; i < bindings.arraySize; i++)
                 if (bindings.GetArrayElementAtIndex(i).FindPropertyRelative("slotId").stringValue == slotId)
+                {
+                    bindings.GetArrayElementAtIndex(i).FindPropertyRelative("sprite").objectReferenceValue = sprite;
+                    serialized.ApplyModifiedPropertiesWithoutUndo();
+                    EditorUtility.SetDirty(artSet);
                     return;
+                }
             var binding = bindings.GetArrayElementAtIndex(bindings.arraySize++);
             binding.FindPropertyRelative("slotId").stringValue = slotId;
             binding.FindPropertyRelative("sprite").objectReferenceValue = sprite;
@@ -328,6 +365,17 @@ namespace MythicPuzzle.Editor
             BuildLayout(spec, content.transform);
             CreateEraseSurface(spec, content.transform, router, director, camera);
             CreateHud(spec, director);
+            if (spec.Number == 1)
+            {
+                var sequence = systems.AddComponent<LevelOneSequenceController>();
+                Set(sequence, "puzzleDirector", director);
+                Set(sequence, "inputRouter", router);
+                Set(sequence, "worldCamera", camera);
+                Set(sequence, "crawlActor", content.transform.Find("Bal Ganesha").gameObject);
+                Set(sequence, "happyActor", content.transform.Find("Happy Ganesha").gameObject);
+                Set(sequence, "tutorialEraser", content.transform.Find("Tutorial Eraser").GetComponent<SpriteRenderer>());
+                Set(sequence, "nextSceneName", spec.NextScene);
+            }
 
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
             var path = ScenePath(spec.Number);
@@ -377,16 +425,24 @@ namespace MythicPuzzle.Editor
 
         private static void LayoutOne(Transform parent)
         {
-            Actor(parent, new Vector3(-1.65f, -2.55f), new Vector2(1.35f, 1.85f));
+            Actor(parent, new Vector3(-1.38f, -2.45f), new Vector2(3.05f, 3.2f));
             var jar = Entity("Hanging Modak Jar", "jar_hanging", parent);
-            Art("Jar Art", "PROP_Jar_Hanging", jar.transform, Vector3.zero, new Vector2(1.45f, 1.55f),
+            Art("Jar Art", "PROP_Jar_Hanging", jar.transform, Vector3.zero, new Vector2(2.05f, 2.15f),
                 new Color(0.71f, 0.23f, 0.12f), 1);
-            jar.transform.position = new Vector3(1.55f, 0.05f);
+            jar.transform.position = new Vector3(1.48f, 1.65f);
             var reward = Entity("Broken Jar Reward", "level_complete_visual", parent);
-            Art("Broken Jar", "PROP_Jar_Broken", reward.transform, new Vector3(1.55f, -2.15f), new Vector2(2.0f, 0.9f),
+            Art("Broken Jar", "PROP_Jar_Broken", reward.transform, new Vector3(1.42f, -2.48f), new Vector2(2.05f, 1.35f),
                 new Color(0.82f, 0.35f, 0.13f), 2);
-            Art("Modaks", "PROP_Modaks_Pile", reward.transform, new Vector3(1.55f, -1.75f), new Vector2(1.25f, 0.55f),
+            Art("Modaks", "PROP_Modaks_Pile", reward.transform, new Vector3(1.48f, -1.92f), new Vector2(1.35f, 0.68f),
                 new Color(1f, 0.72f, 0.12f), 3);
+            var happy = new GameObject("Happy Ganesha");
+            happy.transform.SetParent(parent, false);
+            happy.transform.localPosition = new Vector3(-0.15f, -2.45f);
+            Art("Ganesha Happy Art", "CHR_Ganesha_Happy_Modak", happy.transform, Vector3.zero,
+                new Vector2(2.05f, 2.45f), new Color(0.93f, 0.48f, 0.45f), 4);
+            happy.SetActive(false);
+            Art("Tutorial Eraser", "UI_Eraser_Tutorial", parent, new Vector3(1.88f, 4.02f),
+                new Vector2(1.0f, 0.85f), Color.white, 10).SetActive(false);
         }
 
         private static void LayoutTwo(Transform parent)

@@ -53,5 +53,43 @@ namespace MythicPuzzle.Tests
                 }
             }
         }
+
+        [UnityTest]
+        public IEnumerator LevelOneTutorialRewardCloseUpAndAutoAdvance()
+        {
+            SceneManager.LoadScene("Level_001_BalGanesha");
+            yield return null;
+            var director = Object.FindFirstObjectByType<PuzzleDirector>();
+            var router = Object.FindFirstObjectByType<PuzzleInputRouter>();
+            var content = GameObject.Find("Level Content").transform;
+            var tutorial = content.Find("Tutorial Eraser").gameObject;
+            var happy = content.Find("Happy Ganesha").gameObject;
+            var crawl = content.Find("Bal Ganesha").gameObject;
+            var reward = content.Find("Broken Jar Reward").gameObject;
+            var rope = content.Find("Erasable Target/Interactive Cover").GetComponent<SpriteRenderer>();
+
+            Assert.That(rope.sprite, Is.Not.Null);
+            Assert.That(rope.sprite.name, Does.Contain("Rope_Interior_v2"));
+            var deadline = Time.realtimeSinceStartup + 10f;
+            while (director.State != PuzzleState.AwaitingInput && Time.realtimeSinceStartup < deadline) yield return null;
+            Assert.That(director.State, Is.EqualTo(PuzzleState.AwaitingInput));
+            yield return null;
+            Assert.That(tutorial.activeSelf, Is.True, "The eraser tutorial should play before input.");
+            Assert.That(happy.activeSelf, Is.False);
+
+            router.RaiseEraseProgress(Targets[0], .1f);
+            yield return null;
+            Assert.That(tutorial.activeSelf, Is.False, "The tutorial should stop on first erase progress.");
+            router.RaiseEraseProgress(Targets[0], 1f);
+            deadline = Time.realtimeSinceStartup + 10f;
+            while (director.State != PuzzleState.Complete && Time.realtimeSinceStartup < deadline) yield return null;
+            Assert.That(director.State, Is.EqualTo(PuzzleState.Complete));
+            Assert.That(reward.activeSelf, Is.True);
+            Assert.That(happy.activeSelf, Is.True);
+            Assert.That(crawl.activeSelf, Is.False);
+
+            yield return new WaitForSeconds(3.1f);
+            Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo("Level_002_BalGanesha"));
+        }
     }
 }

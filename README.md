@@ -91,7 +91,7 @@ After Unity finishes compiling:
 
 1. Run `Tools > Bal Ganesha Game > Build First 5 Playable Levels`.
 2. Unity creates any missing level, puzzle, sequence and art-binding assets while preserving existing five-level scenes.
-3. Level 1 opens automatically. Set the Game view to `1170 × 2532`, press Play and rub the rope.
+3. Level 1 opens automatically. Set the Game view to `1170 × 2532`, press Play and rub the rope. The eraser icon demonstrates the motion; after the pot drops, the camera holds on Ganesha's reward pose for two seconds and loads Level 2 automatically.
 4. Use the completion panel to replay or continue through Level 5.
 
 The committed scenes use colored art slots, a reusable masked eraser and a transparent Ganesha crawl sprite derived from the supplied character reference. Replace visuals through each `ART_C01_00N` art set without changing gameplay IDs or code. See the [`Levels 1–5 art prompt pack`](Docs/Bal_Ganesha/First_5_Levels_Art_Prompt_Pack.md) and [`implementation guide`](Docs/Bal_Ganesha/First_5_Levels_Implementation_Guide.md).

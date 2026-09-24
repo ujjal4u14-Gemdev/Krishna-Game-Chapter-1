@@ -33,6 +33,8 @@ The current builder binds `BG_Mid_Palace` on Levels 1–2 and `BG_Mid_Storeroom`
 
 ## Level 1 — The First Modak Jar
 
+**Approved art direction:** the clean interior with a visible wooden ceiling beam and one beam-anchored erasable rope now replaces the earlier courtyard composition. See `Level_1_Interior_Sequence.md` for the separate generated assets, scene bindings, and automatic reward close-up.
+
 **Video-verified action:** erase one vertical rope. A suspended jar drops and safely breaks, revealing modaks. Ganesha starts at lower-left; rope and jar are upper-right; the landing space is clear. No decoy target.
 
 **Composition review prompt**

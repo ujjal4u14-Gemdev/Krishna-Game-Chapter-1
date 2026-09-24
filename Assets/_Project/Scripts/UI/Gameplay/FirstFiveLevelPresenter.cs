@@ -59,6 +59,8 @@ namespace MythicPuzzle.UI
 
         private void OnLevelCompleted(LevelDefinition level)
         {
+            // Level 1 owns a timed cinematic and advances automatically after its close-up.
+            if (level != null && level.LevelNumber == 1) return;
             if (completionPanel != null) completionPanel.SetActive(true);
             if (feedbackText != null) feedbackText.text = "MODAK FOUND!";
             if (nextButton != null)
